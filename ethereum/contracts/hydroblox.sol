@@ -6,14 +6,19 @@ import 'hydrobloxtoken.sol';
 contract HydroBlox {
 
     uint public waterCost;
-    uint public deadline;
+    uint public contractStart;
+   
     address public admin;
 
     address[] consumers;
+    address[] producers;
+
+    mapping(address => bool) producerCanProduce;
 
     constructor() {
         admin = msg.sender;
-        deadline = block.number + 1000;
+        // waterCost set to 1 ETH.
+        waterCost = 1000000000000000000;
     }
 
     modifier isAdmin() {
@@ -21,35 +26,49 @@ contract HydroBlox {
         _;
     }
 
-    modifier costToEnroll() {
-        require(msg.value == 1000000000000000000, "You need to pay 1 ETH to enroll.");
+    modifier isProducer() {
+        require(producerCanProduce[msg.sender], "Does not have right to produce water!");
         _;
     }
 
-     function changeWaterCost(uint _waterCost) external isAdmin{
+    modifier costToEnroll() {
+        require(msg.value == waterCost, "You need to pay the exact amount to enroll");
+        _;
+    }
+
+   
+    function changeWaterCost(uint _waterCost) external isAdmin{
         waterCost = _waterCost;
     }
 
     
-    function enrollConsumer() external payable costToEnroll {
+    function enrollAsConsumer() external payable costToEnroll {
+
+        contractStart = block.number;
         consumers.push(msg.sender);
+        // Below will need to address of the hydrobloxtoken erc20 smart contract, right now it is random
         HydroBloxToken token = HydroBloxToken(0x388299133eb87E22B35a83258b2983A2cFB51C72);
+        // ERC20 contract transfers 100 HBT to the enrolled user.
         token.transfer(msg.sender,100);
         
     }
 
-   /* function enrollProducer(address producer) external isAdmin{
-
+    function enrollAsProducer(address producer) external isAdmin{
+            producerCanProduce[producer] = true;
     }
 
-    function produce(uint litersOfWater) external {
+    function removeProducer(address producer) external isAdmin {
+         producerCanProduce[producer] = false;
+    }
+
+    function produce(uint litersOfWater) external isProducer{
 
     }
 
 
     function consume(uint litersOfWater) external {
 
-    }*/
+    }
 
 
     
