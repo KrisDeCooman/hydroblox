@@ -1,9 +1,17 @@
 //SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.13;
 
-import 'hydrobloxtoken.sol';
+import "contracts/hydrobloxtoken.sol";
 
 contract HydroBlox {
+
+    struct Producer {
+        string name;
+        bool produceRights;
+        ProducerWeight producerWeight;
+    }
+
+    enum ProducerWeight {LOW, MEDIUM, HIGH}
 
     uint public waterCost;
     uint public contractStart;
@@ -11,9 +19,9 @@ contract HydroBlox {
     address public admin;
 
     address[] consumers;
-    address[] producers;
+    mapping(address => Producer) producers;
 
-    mapping(address => bool) producerCanProduce;
+   
 
     constructor() {
         admin = msg.sender;
@@ -26,8 +34,8 @@ contract HydroBlox {
         _;
     }
 
-    modifier isProducer() {
-        require(producerCanProduce[msg.sender], "Does not have right to produce water!");
+    modifier hasProducerRights() {
+        require(producers[msg.sender].produceRights, "Does not have right to produce water!");
         _;
     }
 
@@ -53,15 +61,15 @@ contract HydroBlox {
         
     }
 
-    function enrollAsProducer(address producer) external isAdmin{
-            producerCanProduce[producer] = true;
+    function enrollAsProducer(Producer memory _producer) external isAdmin{
+            
     }
 
     function removeProducer(address producer) external isAdmin {
-         producerCanProduce[producer] = false;
+        
     }
 
-    function produce(uint litersOfWater) external isProducer{
+    function produce(uint litersOfWater) external hasProducerRights{
 
     }
 
