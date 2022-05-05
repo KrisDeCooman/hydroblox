@@ -19,6 +19,7 @@ contract HydroBlox {
     address public admin;
 
     address[] consumers;
+
     mapping(address => Producer) producers;
 
    
@@ -49,6 +50,12 @@ contract HydroBlox {
         waterCost = _waterCost;
     }
 
+    function changeProducingRights(bool rights, address producerAddress) external {
+        Producer storage p = producers[producerAddress];
+        p.produceRights = rights;
+       
+    }
+
     
     function enrollAsConsumer() external payable costToEnroll {
 
@@ -61,16 +68,24 @@ contract HydroBlox {
         
     }
 
-    function enrollAsProducer(Producer memory _producer) external isAdmin{
-            
+    function enrollAsProducer(Producer memory producer, address producerAddress) external isAdmin{
+         producers[producerAddress] = producer;
     }
 
     function removeProducer(address producer) external isAdmin {
-        
+        delete producers[producer];
     }
 
     function produce(uint litersOfWater) external hasProducerRights{
+    // Below will need to address of the hydrobloxtoken erc20 smart contract, right now it is random
+        HydroBloxToken token = HydroBloxToken(0x388299133eb87E22B35a83258b2983A2cFB51C72);
+        
+        // To check
+        token.mint(msg.sender, litersOfWater);
 
+        // distribute the tokens evenly to the amount of consumers
+        
+        
     }
 
 
