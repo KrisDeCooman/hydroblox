@@ -5,7 +5,7 @@ import "contracts/hydrobloxtoken.sol";
 
 
 contract StorageHydroBlox {
-    
+
 }
 
 contract HydroBlox {
@@ -14,12 +14,15 @@ contract HydroBlox {
         string name;
         bool produceRights;
         ProducerWeight producerWeight;
+        address producerAddress;
     }
 
     struct Consumer {
         address consumerAddress;
         uint consumerContractStart;
     }
+
+    event Payout (address producerAddress, uint amountPayed);
 
     enum ProducerWeight {LOW, MEDIUM, HIGH}
 
@@ -109,7 +112,7 @@ contract HydroBlox {
         
     }
 
-    function payProducers() external isAdmin view {
+    function payProducers() external isAdmin {
  
         uint amountOfEthToDistribute;
         // consumer contract lasts for 100 blocks
@@ -126,6 +129,7 @@ contract HydroBlox {
          uint lowProducers;
          uint mediumProducers;
          uint highProducers;
+         uint amountToPay; 
 
         for(uint i = 0; i < producersArray.length; i++) {
             if(producersArray[i].producerWeight == ProducerWeight.LOW) {
@@ -138,20 +142,60 @@ contract HydroBlox {
 
         }
 
+        // Let's say 7 producers are enrolled, 3 high, 3 medium, 1 low and 7 ETH needs to be distributed
+        // high always gets 50%, medium gets 30%, low gets 20%
 
+        if(producersArray.length == highProducers || producersArray.length == mediumProducers || producersArray.length == lowProducers) {
+               // distribute all to the same category 
+               amountToPay = amountOfEthToDistribute / producersArray.length;
+               if (producersArray.length == highProducers) {
+                   // distribute all the high producers evenly
+                   for(uint p; p <= producersArray.length;p++) {
+                        if(producersArray[p].producerWeight == ProducerWeight.HIGH) {
+                            
+                            payable(producersArray[p].producerAddress).transfer(amountToPay); 
+                            emit Payout(producersArray[p].producerAddress, amountToPay);
+                       
+                        }
+                   }
+               
+            }   else if (producersArray.length == mediumProducers) {
+                    // distribute all the medium producers evenly
+                   for(uint p; p <= producersArray.length;p++) {
+                        if(producersArray[p].producerWeight == ProducerWeight.MEDIUM) {
+                          payable(producersArray[p].producerAddress).transfer(amountToPay);
+                          emit Payout(producersArray[p].producerAddress, amountToPay); 
+                        }
+                   }
+
+
+
+             } else {
+                    // distribute all the low producers evenly
+                    for(uint p; p <= producersArray.length;p++) {
+                        if(producersArray[p].producerWeight == ProducerWeight.LOW) {
+                              payable(producersArray[p].producerAddress).transfer(amountToPay); 
+                               emit Payout(producersArray[p].producerAddress, amountToPay); 
+                        }
+                   }
+             }
 
           
+        } else {
+            // different distribution needs to be done
         }
+
+        } else {
+        // emit
+        }
+
 
     }
 
 
     
 
-
     
-
-
 
 }
 
