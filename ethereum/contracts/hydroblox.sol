@@ -3,6 +3,11 @@ pragma solidity ^0.8.13;
 
 import "contracts/hydrobloxtoken.sol";
 
+
+contract StorageHydroBlox {
+    
+}
+
 contract HydroBlox {
 
     struct Producer {
@@ -20,6 +25,8 @@ contract HydroBlox {
 
     uint public waterCost;
     uint consumerId;
+    uint payoutBlockNumber;
+    uint contractBalance;
     
     address public admin;
 
@@ -29,9 +36,6 @@ contract HydroBlox {
     mapping(address => Producer) producers;
     mapping(uint => Consumer) consumers;
     
-    uint payoutBlockNumber;
-    uint contractBalance;
-
     constructor() {
         admin = msg.sender;
         // waterCost set to 1 ETH.
@@ -51,11 +55,6 @@ contract HydroBlox {
 
     modifier costToEnroll() {
         require(msg.value == waterCost, "You need to pay the exact amount to enroll");
-        _;
-    }
-
-    modifier payout() {
-        require(block.number < payoutBlockNumber);
         _;
     }
 
@@ -110,31 +109,38 @@ contract HydroBlox {
         
     }
 
-    function payProducers() external payout isAdmin {
-        uint amountOfEndedContracts;
+    function payProducers() external isAdmin view {
+ 
+        uint amountOfEthToDistribute;
         // consumer contract lasts for 100 blocks
         for(uint c; c < consumersArray.length; c++) {
             if(block.number >= consumers[c].consumerContractStart +100) {
-                amountOfEndedContracts++;
+                amountOfEthToDistribute++;
             }
         } 
 
-        
-        
-         Producer[] memory lowProducers;
-         Producer[] memory mediumProducers;
-         Producer[] memory highProducers;
-
-         contractBalance = address(this).balance;
+        // From this point it is possible that there was 7 ETH in the contract and the amountOfEthToDistribute is 5
+        // Now we need to payout the producers according to their weight.       
+        if(amountOfEthToDistribute > 0) {
+         
+         uint lowProducers;
+         uint mediumProducers;
+         uint highProducers;
 
         for(uint i = 0; i < producersArray.length; i++) {
             if(producersArray[i].producerWeight == ProducerWeight.LOW) {
-                lowProducers.push(producersArray[i]);
-            } else if (producersArray[i].producerWeight == ProducerWeight.MEDIUM) {
-                mediumProducers.push(producersArray[i]);
+                lowProducers++;
+            } else if(producersArray[i].producerWeight == ProducerWeight.MEDIUM) {
+                mediumProducers++;
             } else {
-                highProducers.push(producersArray[i]);
+                highProducers++;
             }
+
+        }
+
+
+
+          
         }
 
     }
