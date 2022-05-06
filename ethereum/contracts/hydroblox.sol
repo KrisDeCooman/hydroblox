@@ -11,25 +11,32 @@ contract HydroBlox {
         ProducerWeight producerWeight;
     }
 
+    struct Consumer {
+        address consumerAddress;
+        uint consumerContractStart;
+    }
+
     enum ProducerWeight {LOW, MEDIUM, HIGH}
 
     uint public waterCost;
+    uint consumerId;
     
     address public admin;
 
-    address[] consumers;
+    Consumer[] consumersArray;
     Producer[] producersArray;
 
     mapping(address => Producer) producers;
-    uint endBlockNr;
-
+    mapping(uint => Consumer) consumers;
+    
+    uint payoutBlockNumber;
     uint contractBalance;
 
     constructor() {
         admin = msg.sender;
         // waterCost set to 1 ETH.
         waterCost = 1000000000000000000;
-        endBlockNr = block.number + 100;
+        payoutBlockNumber = block.number + 500;
     }
 
     modifier isAdmin() {
@@ -47,12 +54,12 @@ contract HydroBlox {
         _;
     }
 
-    modifier deadline() {
-        require(block.number < endBlockNr);
+    modifier payout() {
+        require(block.number < payoutBlockNumber);
         _;
     }
 
-   
+       
     function changeWaterCost(uint _waterCost) external isAdmin{
         waterCost = _waterCost;
     }
@@ -66,11 +73,15 @@ contract HydroBlox {
     
     function enrollAsConsumer() external payable costToEnroll {
 
-        consumers.push(msg.sender);
+        Consumer memory c = Consumer(msg.sender, block.number);
+        consumersArray.push(c);
+        consumers[consumerId] = c;
         // Below will need to address of the hydrobloxtoken erc20 smart contract, right now it is random
         HydroBloxToken token = HydroBloxToken(0x388299133eb87E22B35a83258b2983A2cFB51C72);
         // ERC20 contract transfers 100 HBT to the enrolled user.
         token.transfer(msg.sender,100);
+
+        consumerId++;
         
     }
 
@@ -84,7 +95,7 @@ contract HydroBlox {
     }
 
     function produce(uint litersOfWater) external hasProducerRights{
-        uint tokensPerUser = litersOfWater / consumers.length;
+        uint tokensPerUser = litersOfWater / consumersArray.length;
     // Below will need to address of the hydrobloxtoken erc20 smart contract, right now it is random
         HydroBloxToken token = HydroBloxToken(0x388299133eb87E22B35a83258b2983A2cFB51C72);
         
@@ -93,13 +104,23 @@ contract HydroBlox {
 
         // distribute the tokens evenly to the amount of consumers, looping over consumers array can become expensive
 
-        for(uint i = 0; i < consumers.length; i++) {
-            token.transfer(consumers[i], tokensPerUser);
+        for(uint i = 0; i < consumersArray.length; i++) {
+            token.transfer(consumersArray[i].consumerAddress, tokensPerUser);
         }
         
     }
 
-    function payProducers() external deadline isAdmin {
+    function payProducers() external payout isAdmin {
+        uint amountOfEndedContracts;
+        // consumer contract lasts for 100 blocks
+        for(uint c; c < consumersArray.length; c++) {
+            if(block.number >= consumers[c].consumerContractStart +100) {
+                amountOfEndedContracts++;
+            }
+        } 
+
+        
+        
          Producer[] memory lowProducers;
          Producer[] memory mediumProducers;
          Producer[] memory highProducers;
