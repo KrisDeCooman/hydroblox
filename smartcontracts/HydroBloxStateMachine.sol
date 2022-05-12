@@ -16,8 +16,7 @@ contract HydroBloxStateMachine is Ownable {
 
     States public state;
 
-    constructor()
-    {
+    constructor() {
         state = States.SubscriptionEnrollment;
     }
 
@@ -31,17 +30,8 @@ contract HydroBloxStateMachine is Ownable {
         _;
 	}
 
-    function transitionToNextState() external onlyOwner {
-        if (state == States.SubscriptionEnrollment) {
-            state = States.SubscriptionRunning;
-        }
-        else if (state == States.SubscriptionRunning) {
-            state = States.SubscriptionFinished;
-        }
-        else {
-            state = States.SubscriptionEnrollment;
-        }
-
+    function transitionToState(States _state) internal {
+        state = _state;
         emit StateTransitioned(state);
     }
 }
