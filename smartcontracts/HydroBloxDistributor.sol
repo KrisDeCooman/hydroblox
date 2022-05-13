@@ -45,7 +45,7 @@ contract HydroBloxDistributor is HydroBloxStateMachine {
     }
 
     function claimTokensAsConsumer() external checkConsumer(true) isNotInState(SubscriptionStates.Enrollment) {
-        uint tokensToClaim = store.totalTokensToDivide() / store.amountOfConsumers(); // todo safemath?
+        uint tokensToClaim = store.tokensToDivide() / store.amountOfConsumers(); // todo safemath?
         (, uint tokensAlreadyClaimed,) = store.consumers(msg.sender);
         if (tokensToClaim > tokensAlreadyClaimed) {
             uint amount = tokensToClaim - tokensAlreadyClaimed;
@@ -56,8 +56,7 @@ contract HydroBloxDistributor is HydroBloxStateMachine {
 
     function claimEtherAsProducer() external checkProducer(true) isInState(SubscriptionStates.Finished) {
         (, uint tokensMinted,) = store.producers(msg.sender);
-        // todo: safe balance in contract on transition to finished
-        uint amount = (tokensMinted / store.totalTokensToDivide()) * address(this).balance; // todo safemath?
+        uint amount = (tokensMinted / store.tokensToDivide()) * store.etherToDivide(); // todo safemath?
         store.updateOnEtherClaimed(msg.sender);
         payable(msg.sender).transfer(amount);
     }
@@ -65,7 +64,7 @@ contract HydroBloxDistributor is HydroBloxStateMachine {
     function transitionToSubscriptionEnrollment() external isInState(SubscriptionStates.Finished) onlyOwner {
         transitionToState(SubscriptionStates.Enrollment);
         uint orphanedTokens = token.balanceOf(address(this));
-        store.updateOnNewSubscriptionRun(orphanedTokens);
+        store.updateOnSubscriptionEnrollment(orphanedTokens);
     }
 
     function transitionToSubscriptionRunning() external isInState(SubscriptionStates.Enrollment) onlyOwner {
@@ -74,5 +73,6 @@ contract HydroBloxDistributor is HydroBloxStateMachine {
 
     function transitionToSubscriptionFinished() external isInState(SubscriptionStates.Running) onlyOwner {
         transitionToState(SubscriptionStates.Finished);
+        store.updateOnSubscriptionFinished(address(this).balance);
     }
 }
