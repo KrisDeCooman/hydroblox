@@ -20,7 +20,7 @@ contract HydroBloxStorage is Ownable {
 
     uint subscriptionRunId;
     uint public subscriptionPrice;
-    uint public totalTokensMinted;
+    uint public totalTokensToDivide;
     uint public amountOfConsumers;
     mapping(address => Consumer) public consumers;
     mapping(address => Producer) public producers;
@@ -28,7 +28,7 @@ contract HydroBloxStorage is Ownable {
     constructor() {
         subscriptionRunId = 0;
         subscriptionPrice = 1 gwei;
-        totalTokensMinted = 0;
+        totalTokensToDivide = 0;
         amountOfConsumers = 0;
     }
 
@@ -53,16 +53,20 @@ contract HydroBloxStorage is Ownable {
 
     function updateOnTokensMinted(address producerAddress, uint tokensMinted) external onlyOwner {
         producers[producerAddress].tokensMinted += tokensMinted;
-        totalTokensMinted += tokensMinted;
+        totalTokensToDivide += tokensMinted;
     }
 
     function updateOnTokensClaimed(address consumerAddress, uint tokensClaimed) external onlyOwner {
         consumers[consumerAddress].tokensClaimed += tokensClaimed;
     }
 
-    function updateOnNewSubscriptionRun(uint _totalTokensMinted) external onlyOwner {
+    function updateOnEtherClaimed(address producerAddress) external onlyOwner {
+        producers[producerAddress].tokensMinted = 0;
+    }
+
+    function updateOnNewSubscriptionRun(uint orphanedTokens) external onlyOwner {
         subscriptionRunId += 1;
-        totalTokensMinted = _totalTokensMinted;
+        totalTokensToDivide = orphanedTokens;
         amountOfConsumers = 0;
     }
 

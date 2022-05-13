@@ -17,12 +17,12 @@ contract HydroBloxDistributor is HydroBloxStateMachine {
     }
 
     modifier checkConsumer(bool value) {
-        require(!store.isConsumer(msg.sender) == value, value ? "Not registered as consumer." : "Already registered as consumer.");
+        require(store.isConsumer(msg.sender) == value, value ? "Not registered as consumer." : "Already registered as consumer.");
         _;
     }
 
     modifier checkProducer(bool value) {
-        require(!store.isProducer(msg.sender) == value, value ? "Not registered as producer." : "Already registered as producer.");
+        require(store.isProducer(msg.sender) == value, value ? "Not registered as producer." : "Already registered as producer.");
         _;
     }
 
@@ -30,46 +30,49 @@ contract HydroBloxDistributor is HydroBloxStateMachine {
         store.changeSubscriptionPrice(subscriptionPrice);
     }
 
-    function enrollAsConsumer() external payable checkConsumer(false) isInState(States.SubscriptionEnrollment) {
-        require(msg.value != store.subscriptionPrice(), "Not payed correct amount of ether.");
+    function enrollAsConsumer() external payable checkConsumer(false) isInState(SubscriptionStates.Enrollment) {
+        require(msg.value == store.subscriptionPrice(), "Not payed correct amount of ether.");
         store.addConsumer(msg.sender);
     }
 
-    function enrollAsProducer() external checkProducer(false) isInState(States.SubscriptionEnrollment) {
+    function enrollAsProducer() external checkProducer(false) isInState(SubscriptionStates.Enrollment) {
         store.addProducer(msg.sender);
     }
 
-    function produce(uint liters) external checkProducer(true) isInState(States.SubscriptionRunning) {
+    function produce(uint liters) external checkProducer(true) isInState(SubscriptionStates.Running) {
         token.mint(address(this), liters);
+        store.updateOnTokensMinted(msg.sender, liters);
     }
 
-    function claimTokensAsConsumer() external checkConsumer(true) isNotInState(States.SubscriptionEnrollment) {
-        uint tokensToClaim = store.totalTokensMinted() / store.amountOfConsumers(); // todo safemath?
+    function claimTokensAsConsumer() external checkConsumer(true) isNotInState(SubscriptionStates.Enrollment) {
+        uint tokensToClaim = store.totalTokensToDivide() / store.amountOfConsumers(); // todo safemath?
         (, uint tokensAlreadyClaimed,) = store.consumers(msg.sender);
         if (tokensToClaim > tokensAlreadyClaimed) {
             uint amount = tokensToClaim - tokensAlreadyClaimed;
-            token.transfer(msg.sender, amount);
             store.updateOnTokensClaimed(msg.sender, amount);
+            token.transfer(msg.sender, amount);
         }
     }
 
-    function claimEtherAsProducer() external checkProducer(true) isInState(States.SubscriptionFinished) {
+    function claimEtherAsProducer() external checkProducer(true) isInState(SubscriptionStates.Finished) {
         (, uint tokensMinted,) = store.producers(msg.sender);
-        uint amount = (tokensMinted / store.totalTokensMinted()) * address(this).balance; // todo safemath?
+        // todo: safe balance in contract on transition to finished
+        uint amount = (tokensMinted / store.totalTokensToDivide()) * address(this).balance; // todo safemath?
+        store.updateOnEtherClaimed(msg.sender);
         payable(msg.sender).transfer(amount);
     }
 
-    function transitionToSubscriptionEnrollment() external isInState(States.SubscriptionFinished) onlyOwner {
-        transitionToState(States.SubscriptionEnrollment);
+    function transitionToSubscriptionEnrollment() external isInState(SubscriptionStates.Finished) onlyOwner {
+        transitionToState(SubscriptionStates.Enrollment);
         uint orphanedTokens = token.balanceOf(address(this));
         store.updateOnNewSubscriptionRun(orphanedTokens);
     }
 
-    function transitionToSubscriptionRunning() external isInState(States.SubscriptionEnrollment) onlyOwner {
-        transitionToState(States.SubscriptionRunning);
+    function transitionToSubscriptionRunning() external isInState(SubscriptionStates.Enrollment) onlyOwner {
+        transitionToState(SubscriptionStates.Running);
     }
 
-    function transitionToSubscriptionFinished() external isInState(States.SubscriptionRunning) onlyOwner {
-        transitionToState(States.SubscriptionFinished);
+    function transitionToSubscriptionFinished() external isInState(SubscriptionStates.Running) onlyOwner {
+        transitionToState(SubscriptionStates.Finished);
     }
 }

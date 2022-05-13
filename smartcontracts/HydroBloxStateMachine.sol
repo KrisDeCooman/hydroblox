@@ -6,31 +6,31 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract HydroBloxStateMachine is Ownable {
 
-    event StateTransitioned (States state);
+    event StateTransitioned (SubscriptionStates state);
 
-    enum States {
-        SubscriptionEnrollment,
-        SubscriptionRunning,
-        SubscriptionFinished
+    enum SubscriptionStates {
+        Enrollment,
+        Running,
+        Finished
     }
 
-    States public state;
+    SubscriptionStates public state;
 
     constructor() {
-        state = States.SubscriptionEnrollment;
+        state = SubscriptionStates.Enrollment;
     }
 
-    modifier isInState(States _state) {
+    modifier isInState(SubscriptionStates _state) {
         require(state == _state, "Contract is not in required state.");
         _;
 	}
 
-    modifier isNotInState(States _state) {
+    modifier isNotInState(SubscriptionStates _state) {
         require(state != _state, "Contract is not in required state.");
         _;
 	}
 
-    function transitionToState(States _state) internal {
+    function transitionToState(SubscriptionStates _state) internal {
         state = _state;
         emit StateTransitioned(state);
     }
