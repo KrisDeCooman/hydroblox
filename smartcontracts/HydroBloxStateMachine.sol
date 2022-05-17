@@ -28,8 +28,27 @@ abstract contract HydroBloxStateMachine {
         _;
 	}
 
-    function transitionToState(SubscriptionStates _state) internal {
-        state = _state;
+    function transitionToNextState() external {
+        require(allowedToTransistion(), "Not allowed to trigger transition to next state.");
+        
+        if (state == SubscriptionStates.Enrollment) {
+            state = SubscriptionStates.Running;
+            onTransitionToRunning();
+        }
+        else if (state == SubscriptionStates.Running) {
+            state = SubscriptionStates.Finished;
+            onTransitionToFinished();
+        }
+        else {
+            state = SubscriptionStates.Enrollment;
+            onTransitionToEnrollment();
+        }
+
         emit StateTransitioned(state);
     }
+
+    function allowedToTransistion() virtual view internal returns (bool);
+    function onTransitionToEnrollment() virtual internal;
+    function onTransitionToRunning() virtual internal;
+    function onTransitionToFinished() virtual internal;
 }

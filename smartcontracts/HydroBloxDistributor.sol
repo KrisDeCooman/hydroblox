@@ -73,19 +73,21 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
         }
     }
 
-    function transitionToSubscriptionEnrollment() external isInState(SubscriptionStates.Finished) onlyOwner {
-        transitionToState(SubscriptionStates.Enrollment);
+    function allowedToTransistion() override view internal returns (bool) {
+        return isOwner();
+    }
+
+    function onTransitionToEnrollment() override internal {
         uint orphanedTokens = token.balanceOf(address(this));
         uint orphanedEther = address(this).balance;
         store.updateOnSubscriptionEnrollment(orphanedTokens, orphanedEther);
     }
 
-    function transitionToSubscriptionRunning() external isInState(SubscriptionStates.Enrollment) onlyOwner {
-        transitionToState(SubscriptionStates.Running);
+    function onTransitionToRunning() override internal {
+        // no actions needed
     }
 
-    function transitionToSubscriptionFinished() external isInState(SubscriptionStates.Running) onlyOwner {
-        transitionToState(SubscriptionStates.Finished);
+    function onTransitionToFinished() override internal {
         store.updateOnSubscriptionFinished(address(this).balance);
     }
 }
