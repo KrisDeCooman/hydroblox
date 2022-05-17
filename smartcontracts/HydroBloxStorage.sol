@@ -18,7 +18,7 @@ contract HydroBloxStorage is Ownable {
         uint subscriptionRunId;
     }
 
-    uint subscriptionRunId;
+    uint public subscriptionRunId;
     uint public subscriptionPrice;
     uint public tokensToDivide;
     uint public etherToDivide;
@@ -66,10 +66,10 @@ contract HydroBloxStorage is Ownable {
         producers[producerAddress].tokensMinted = 0;
     }
 
-    function updateOnSubscriptionEnrollment(uint orphanedTokens) external onlyOwner {
+    function updateOnSubscriptionEnrollment(uint orphanedTokens, uint orphanedEther) external onlyOwner {
         subscriptionRunId += 1;
         tokensToDivide = orphanedTokens;
-        etherToDivide = 0;
+        etherToDivide = orphanedEther;
         amountOfConsumers = 0;
     }
 

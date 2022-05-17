@@ -2,12 +2,18 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
+import "./MultiOwnable.sol";
 import "./HydroBloxToken.sol";
 import "./HydroBloxStorage.sol";
 import "./HydroBloxStateMachine.sol";
 
-contract HydroBloxDistributor is HydroBloxStateMachine {
+contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
     
+    event ConsumerEnrolled(address indexed consumer, uint subscriptionRunId);
+    event ProducerEnrolled(address indexed producer, uint subscriptionRunId);
+    event TokensClaimedByConsumer(address indexed consumer, uint amount);
+    event EtherClaimedByProducer(address indexed producer, uint amount);
+
     HydroBloxToken public token;
     HydroBloxStorage public store;
 
@@ -33,10 +39,12 @@ contract HydroBloxDistributor is HydroBloxStateMachine {
     function enrollAsConsumer() external payable checkConsumer(false) isInState(SubscriptionStates.Enrollment) {
         require(msg.value == store.subscriptionPrice(), "Not payed correct amount of ether.");
         store.addConsumer(msg.sender);
+        emit ConsumerEnrolled(msg.sender, store.subscriptionRunId());
     }
 
     function enrollAsProducer() external checkProducer(false) isInState(SubscriptionStates.Enrollment) {
         store.addProducer(msg.sender);
+        emit ProducerEnrolled(msg.sender, store.subscriptionRunId());
     }
 
     function produce(uint liters) external checkProducer(true) isInState(SubscriptionStates.Running) {
@@ -51,20 +59,25 @@ contract HydroBloxDistributor is HydroBloxStateMachine {
             uint amount = tokensToClaim - tokensAlreadyClaimed;
             store.updateOnTokensClaimed(msg.sender, amount);
             token.transfer(msg.sender, amount);
+            emit TokensClaimedByConsumer(msg.sender, amount);
         }
     }
 
     function claimEtherAsProducer() external checkProducer(true) isInState(SubscriptionStates.Finished) {
         (, uint tokensMinted,) = store.producers(msg.sender);
         uint amount = (tokensMinted / store.tokensToDivide()) * store.etherToDivide(); // todo safemath?
-        store.updateOnEtherClaimed(msg.sender);
-        payable(msg.sender).transfer(amount);
+        if (amount > 0) {
+            store.updateOnEtherClaimed(msg.sender);
+            payable(msg.sender).transfer(amount);
+            emit EtherClaimedByProducer(msg.sender, amount);
+        }
     }
 
     function transitionToSubscriptionEnrollment() external isInState(SubscriptionStates.Finished) onlyOwner {
         transitionToState(SubscriptionStates.Enrollment);
         uint orphanedTokens = token.balanceOf(address(this));
-        store.updateOnSubscriptionEnrollment(orphanedTokens);
+        uint orphanedEther = address(this).balance;
+        store.updateOnSubscriptionEnrollment(orphanedTokens, orphanedEther);
     }
 
     function transitionToSubscriptionRunning() external isInState(SubscriptionStates.Enrollment) onlyOwner {
