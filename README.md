@@ -14,6 +14,8 @@ Table of content
 
 ### Smart contracts
 
+The following smart contracts are part of the HydroBlox project. These contracts were written in Solidity.
+
 #### HydroBloxToken
 
 The HydroBloxToken (HBT) smart contract is the representation of drinkable water, implemented as an ERC20 token. 1 HBT is equal to 1 liter of drinkable water.
