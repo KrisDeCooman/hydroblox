@@ -18,7 +18,7 @@ Table of content
 
 The HydroBloxToken (HBT) smart contract is the representation of drinkable water, implemented as an ERC20 token. 1 HBT is equal to 1 liter of drinkable water.
 
-HBT tokens are minted when a producer produces water. HBT tokens are burned when a consumer consumers water.
+HBT tokens are minted when a producer produces water. HBT tokens are burned when a consumer consumes water.
 
 #### HydroBloxStateDistributor
 
@@ -29,7 +29,7 @@ Enrolled consumers are entitled to claim HBT tokens, which they can then use to 
 
 #### HydroBloxStorage
 
-The HydroBloxStateDistributor smart contract uses the HydroBloxStorage to keep track of the consumers, producers, the HBT tokens to divide and the ether to divide.
+The HydroBloxStateDistributor smart contract uses the HydroBloxStorage contract to keep track of the enrolled consumers, enrolled producers, the HBT tokens to divide and the ether to divide.
 
 #### HydroBloxStateMachine
 
@@ -66,8 +66,8 @@ The HydroBloxAuthority smart contract is the issuer of HydroBloxConsumptionMeter
 #### MultiOwnable
 
 Both the HydroBloxStateDistributor and HydroBloxAuthority smart contracts implement the MultiOwnable smart contract.
-This smart contract only exists for testing purposes only, so each of team members can be owner on the deployed environment.
-The owners are able to transition the state machine from one state to another, or to issue HBCM and HBPM identities.
+This smart contract exists for testing purposes only, so each of team members can be an owner on the deployed environment.
+The owners are for example able to transition the state machine from one state to another, or to issue HBCM and HBPM identities.
 
 ### Example
 
@@ -89,7 +89,7 @@ Visual Studio Code
 
 ### Deployment
 
-Deployment of the smart contracts easily can be done using Remix, following these steps:
+Deployment of the smart contracts can easily be done using Remix, following these steps:
 - Deploy the HydroBloxAuthority smart contract
 - Get the address of the HydroBloxConsumptionMeter and HydroBloxProductionMeter contracts (created by HydroBloxAuthority)
 - Deploy the HydroBloxDistributor smart contract, given the addresses of the HydroBloxConsumptionMeter and HydroBloxProductionMeter contracts
