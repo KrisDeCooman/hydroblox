@@ -9,8 +9,34 @@ Table of content
 - [Authors](?anchor=authors)
 
 ## Analysis
+Due to climate change, we are experiencing more droughts, which are having an impact on nature and our scarce water supply. Every year we are seeing more and more news articles that the situation is becoming more problematic.
+![image](https://user-images.githubusercontent.com/25088136/169395654-f6d79a40-cb66-4c54-8b65-fc8c0228bd08.png)
+
+In general, we see 3 problems with the current policy:
+
+  1. Current measurements taken are all centralized and focused on prohibitions, which are difficult to enforce in practice
+
+  2. People are not incentivized to be more frugal with water, especially during droughts, as the price is always stable with no penalty for irresponsible       
+  consumers.While people who take the water shortages seriously by changing their way of consumption are not rewarded.
+  
+  3. Although more and more news articles are published, the problem is still under recognized as the problem is only becoming worse instead of better.
+
+We have come up with Hydroblox, which is a blockchain based solution which should tackle the above problems in a cost-effective decentralized scalable way by using blockchain technology.
 
 ## Design decisions
+
+### General design principles
+
+#### Gaining trust & maintainability
+In order to reduce the unexpected behavior of our code as much as possible, we used state machines for the business objects. This gives a clear view for users on what the smart contract actually does in a transparent way. Next we also tried to make use of modifiers to check certain preconditions which improves the readability.
+
+Adding new features in the future should also be safer as it's more concise and better manageable from a security point of view. This should increase the trustworthiness in Hydroblox for users and thus ultimately increase the usage.
+
+#### Upgradability and costs
+We decided to create a separate contract for the business logic and the actual data storage. It adds some complexity and code for a relative small project, but this should make Hydroblox more future-proof to work on as data storage is abstracted from the business logic. In order to minimize gas usage we tried to avoid using loops and made use of the Withdrawal pattern where users instead of the contract pay to withdraw tokens.
+
+This limitation was not always easy and required a bit of creativity sometimes. For example, one of the functionalities is that we calculate how many tokens each consumer can claim during a subscription period while making sure that they don't claim more tokens than their "fair share", without updating this every time for every consumer individually when new tokens are minted.
+
 
 ### Smart contracts
 
