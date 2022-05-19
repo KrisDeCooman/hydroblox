@@ -20,20 +20,20 @@ The HydroBloxToken (HBT) smart contract is the representation of drinkable water
 
 HBT tokens are minted when a producer produces water. HBT tokens are burned when a consumer consumes water.
 
-#### HydroBloxStateDistributor
+#### HydroBloxDistributor
 
-The HydroBloxStateDistributor is the main smart contract and uses most of the other smart contacts discussed here.
+The HydroBloxDistributor is the main smart contract and uses most of the other smart contacts discussed here.
 Both consumers and producers call this contract when they want to enroll into the HydroBlox drinkable water distribution process.
 Consumers need to pay in ether when they want to enroll. Producers are paid in ether when they produce water.
 Enrolled consumers are entitled to claim HBT tokens, which they can then use to consume drinkable water.
 
 #### HydroBloxStorage
 
-The HydroBloxStateDistributor smart contract uses the HydroBloxStorage contract to keep track of the enrolled consumers, enrolled producers, the HBT tokens to divide and the ether to divide.
+The HydroBloxDistributor smart contract uses the HydroBloxStorage contract to keep track of the enrolled consumers, enrolled producers, the HBT tokens to divide and the ether to divide.
 
 #### HydroBloxStateMachine
 
-The HydroBloxStateDistributor smart contract implements the HydroBloxStateMachine contract, which is a representation of a subscription state machine.
+The HydroBloxDistributor smart contract implements the HydroBloxStateMachine contract, which is a representation of a subscription state machine.
 The state machine can be in states:
 - Enrollment: during this state, consumers and producers can enroll for the upcoming subscription run
 - Running: during this state, producers can produce water and consumers can claim HBT tokens
@@ -48,7 +48,7 @@ We do this for testing purposes. In reality, we would implement the transitions 
 #### HydroBloxConsumptionMeter
 
 The HydroBloxConsumptionMeter (HBCM) smart contract is a DID representation for a consumption meter, implemented as an ERC721 token (NFT).
-A physical consumption meter will need to have a HBCM token in its wallet in order to identity itself to the HydroBloxStateDistributor smart contract when enrolling as consumer.
+A physical consumption meter will need to have a HBCM token in its wallet in order to identity itself to the HydroBloxDistributor smart contract when enrolling as consumer.
 Currently no claims are assigned to this identity.
 In the future, claims could be added such as the amount of persons using this consumption meter.
 HBT tokens could then be divided taking the amount of persons into account.
@@ -56,7 +56,7 @@ HBT tokens could then be divided taking the amount of persons into account.
 #### HydroBloxProductionMeter
 
 The HydroBloxProductionMeter (HBPM) smart contract is a DID representation for a production meter, implemented as an ERC721 token (NFT).
-A physical production meter will need to have a HBPM token in its wallet in order to identity itself to the HydroBloxStateDistributor smart contract when enrolling as producer.
+A physical production meter will need to have a HBPM token in its wallet in order to identity itself to the HydroBloxDistributor smart contract when enrolling as producer.
 Currently no claims are assigned to this identity.
 
 #### HydroBloxAuthority
@@ -65,7 +65,7 @@ The HydroBloxAuthority smart contract is the issuer of HydroBloxConsumptionMeter
 
 #### MultiOwnable
 
-Both the HydroBloxStateDistributor and HydroBloxAuthority smart contracts implement the MultiOwnable smart contract.
+Both the HydroBloxDistributor and HydroBloxAuthority smart contracts implement the MultiOwnable smart contract.
 This smart contract exists for testing purposes only, so each of team members can be an owner on the deployed environment.
 The owners are for example able to transition the state machine from one state to another, or to issue HBCM and HBPM identities.
 
