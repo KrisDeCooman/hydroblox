@@ -6,9 +6,11 @@ import "./MultiOwnable.sol";
 import "./HydroBloxToken.sol";
 import "./HydroBloxStorage.sol";
 import "./HydroBloxStateMachine.sol";
+import "./HydroBloxConsumptionMeter.sol";
+import "./HydroBloxProductionMeter.sol";
 
 contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
-    
+
     event ConsumerEnrolled(address indexed consumer, uint subscriptionRunId);
     event ProducerEnrolled(address indexed producer, uint subscriptionRunId);
     event TokensClaimedByConsumer(address indexed consumer, uint amount);
@@ -16,10 +18,24 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
 
     HydroBloxToken public token;
     HydroBloxStorage public store;
+    HydroBloxConsumptionMeter public consumptionMeter;
+    HydroBloxProductionMeter public productionMeter;
 
-    constructor() {
+    constructor(address _consumptionMeter, address _productionMeter) {
         token = new HydroBloxToken();
         store = new HydroBloxStorage();
+        consumptionMeter = HydroBloxConsumptionMeter(_consumptionMeter);
+        productionMeter = HydroBloxProductionMeter(_productionMeter);
+    }
+
+    modifier verifyConsumer() {
+        require(consumptionMeter.balanceOf(msg.sender) > 0, "Consumer cannot be identified as registered consumption meter.");
+        _;
+    }
+
+    modifier verifyProducer() {
+        require(productionMeter.balanceOf(msg.sender) > 0, "Producer cannot be identified as registered production meter.");
+        _;
     }
 
     modifier checkConsumer(bool value) {
@@ -36,13 +52,13 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
         store.changeSubscriptionPrice(subscriptionPrice);
     }
 
-    function enrollAsConsumer() external payable checkConsumer(false) isInState(SubscriptionStates.Enrollment) {
+    function enrollAsConsumer() external payable verifyConsumer checkConsumer(false) isInState(SubscriptionStates.Enrollment) {
         require(msg.value == store.subscriptionPrice(), "Not payed correct amount of ether.");
         store.addConsumer(msg.sender);
         emit ConsumerEnrolled(msg.sender, store.subscriptionRunId());
     }
 
-    function enrollAsProducer() external checkProducer(false) isInState(SubscriptionStates.Enrollment) {
+    function enrollAsProducer() external verifyProducer checkProducer(false) isInState(SubscriptionStates.Enrollment) {
         store.addProducer(msg.sender);
         emit ProducerEnrolled(msg.sender, store.subscriptionRunId());
     }
@@ -65,7 +81,7 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
 
     function claimEtherAsProducer() external checkProducer(true) isInState(SubscriptionStates.Finished) {
         (, uint tokensMinted,) = store.producers(msg.sender);
-        uint amount = (tokensMinted / store.tokensToDivide()) * store.etherToDivide(); // todo safemath?
+        uint amount = store.etherToDivide() * tokensMinted / store.tokensToDivide(); // todo safemath?
         if (amount > 0) {
             store.updateOnEtherClaimed(msg.sender);
             payable(msg.sender).transfer(amount);
