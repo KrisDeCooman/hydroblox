@@ -44,7 +44,7 @@ The blockchain solution we developed should make economic sense and should try t
 
   1. Our solution is decentralized and allows that minted tokens, which will depend on the amount of rain being captured in the reservoirs, gets divided in a fair way      to subscribed consumers. Consumers can then use these tokens as they wish, no prohibitions required.
   
-  2. Spendthrift/unresponsible consumers will get penalized as they will run out of tokens during droughts as no new tokens will get created, they will need to buy          tokens from frugal consumers who will have a surplus of tokens and thus get rewarded.
+  2. Spendthrift/unresponsible consumers will get penalized as they will run out of tokens during droughts as no new tokens will get created, they will need to buy          tokens from frugal consumers who will have a surplus of tokens and thus get rewarded for being frugal
   
   3. As the amount and the price of the tokens will be visible on a website/app this should make more consumers aware of the fact that water is something valuable,          especially during droughts. 
 
