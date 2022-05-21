@@ -73,6 +73,9 @@ Having a fixed set of consumers and producers enables us to evenly divide the et
 We chose to transition from one state to the next one manually, by calling a function on the smart contract.
 We do this for testing purposes. In reality, we would implement the transitions to happen automatically tiggered by time (using the block number).
 
+![image](https://user-images.githubusercontent.com/25088136/169662319-956f08e6-bbc1-454c-983a-605418598031.png)
+
+
 #### HydroBloxConsumptionMeter
 
 The HydroBloxConsumptionMeter (HBCM) smart contract is a DID representation for a consumption meter, implemented as an ERC721 token (NFT).
