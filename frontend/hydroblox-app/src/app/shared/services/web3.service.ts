@@ -9,7 +9,7 @@ declare const window: any;
 })
 export class Web3Service {
 
-    private expectedChainId = "0x4"; // Rinkeby Test Network
+    private expectedChainId = "0x4"; // Rinkeby Test Network -- TODO get this from settings?
     private connected = false;
 
     constructor(private errorSnackService: ErrorSnackService) {

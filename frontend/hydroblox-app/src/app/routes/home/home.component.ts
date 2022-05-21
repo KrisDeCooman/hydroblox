@@ -16,7 +16,8 @@ export class HomeComponent {
   async onButtonClicked() {
 
     var connected = await this.web3Service.connect();
-
-    //await this.router.navigate(['next']);
+    if (connected) {
+      await this.router.navigate(['choice']);
+    }
   }
 }
