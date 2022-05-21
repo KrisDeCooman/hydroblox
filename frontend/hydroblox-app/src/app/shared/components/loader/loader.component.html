@@ -1,0 +1,7 @@
+<div *ngIf="showLoading | async" class="overlay">
+  <mat-progress-spinner mode="indeterminate" class="spinner">
+  </mat-progress-spinner>
+</div>
+<div *ngIf="showFinished | async" class="overlay">
+  <mat-icon class="icon" color=primary>done</mat-icon>
+</div>
