@@ -30,7 +30,7 @@ We have come up with Hydroblox, which is a blockchain based solution which shoul
 During the project we tried to keep some import values/design principles in mind.
 
 #### Gaining trust & maintainability
-In order to reduce the unexpected behavior of our code as much as possible, we used state machines for the business objects. This gives a clear view for users on what the smart contract actually does in a transparent way. Next we also tried to make use of modifiers to check certain preconditions which improves the readability.
+In order to reduce the unexpected behavior of our code as much as possible, we used of the state machine pattern. This gives a clear view for users on what the smart contract actually does in a transparent way. Next we also tried to make use of modifiers to check certain preconditions which improves the readability.
 
 Adding new features in the future should also be safer as it's more concise and better manageable from a security point of view. This should increase the trustworthiness in Hydroblox for users and thus ultimately increase the usage.
 
