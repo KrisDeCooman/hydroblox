@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import detectEthereumProvider from '@metamask/detect-provider';
+import { Constants } from './constants';
 import { ErrorCodes, ErrorSnackService } from './errorsnack.service';
+import Web3 from 'web3';
+import { Contract } from 'web3-eth-contract';
 
 declare const window: any;
 
@@ -9,20 +12,20 @@ declare const window: any;
 })
 export class Web3Service {
 
-    private expectedChainId = "0x4"; // Rinkeby Test Network -- TODO get this from settings?
-    private connected = false;
+    private web3: Web3 | undefined;
+    private distributor : Contract | undefined;
 
     constructor(private errorSnackService: ErrorSnackService) {
     }
 
     public isConnected() : boolean {
-        return this.connected;
+        return this.web3 != undefined;
     }
 
     public async connect(): Promise<boolean> {
         // see: https://docs.metamask.io/guide/ethereum-provider.html#using-the-provider
 
-        this.connected = false;
+        this.web3 = undefined;
 
         const provider = await detectEthereumProvider();
         if (!provider) {
@@ -35,7 +38,7 @@ export class Web3Service {
             return false;
         }
 
-        var accounts: any;
+        var accounts: string[];
         try {
             accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         }
@@ -61,13 +64,21 @@ export class Web3Service {
         }
 
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-        if (chainId != this.expectedChainId) {
+        if (chainId != Constants.NetworkId) {
             this.errorSnackService.showError(ErrorCodes.MetaMaskWrongChain);
             return false;
         }
 
         console.log('Connected to Metamask!');
-        this.connected = true;
+        
+        this.web3 = new Web3(window.ethereum);
+        this.web3.defaultAccount = accounts[0];
+        this.distributor = new this.web3.eth.Contract(Constants.DistributorAbi, Constants.DistributorAddress, { from: accounts[0] });
+
         return true;
+    }
+
+    public getDistributorContract(): Contract {
+        return this.distributor!;
     }
 }
