@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { Constants } from './constants';
 import { ErrorCodes, ErrorSnackService } from './errorsnack.service';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
+import { Router } from '@angular/router';
 
 declare const window: any;
 
@@ -15,7 +16,21 @@ export class Web3Service {
     private web3: Web3 | undefined;
     private distributor : Contract | undefined;
 
-    constructor(private errorSnackService: ErrorSnackService) {
+    constructor(
+        zone: NgZone,
+        router: Router, 
+        private errorSnackService: ErrorSnackService) {
+
+        // see: https://docs.metamask.io/guide/ethereum-provider.html#events
+        var onChainOrAccountsChanged = () => {
+            console.log('Your chain or account changed in MetaMask. You will be redirected to home.');
+            this.web3 = undefined;
+            zone.run(() => router.navigate(['']));
+        };
+        if (window.ethereum) {
+            window.ethereum.on('chainChanged', onChainOrAccountsChanged);
+            window.ethereum.on('accountsChanged', onChainOrAccountsChanged);
+        }
     }
 
     public isConnected() : boolean {

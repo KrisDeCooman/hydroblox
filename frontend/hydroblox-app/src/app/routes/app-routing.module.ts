@@ -4,8 +4,7 @@ import { HomeModule } from './home/home.module';
 import { HomeComponent } from './home/home.component';
 import { ChoiceModule } from './choice/choice.module';
 import { ChoiceComponent } from './choice/choice.component';
-
-// TODO implement guards
+import { ConnectedGuard } from '../shared/guards/connected.guard';
 
 const routes: Routes = [
   {
@@ -14,10 +13,11 @@ const routes: Routes = [
   },
   {
     path: 'choice',
-    component: ChoiceComponent
+    component: ChoiceComponent,
+    canActivate: [ConnectedGuard]
   },
   {
-    path: '*',
+    path: '**',
     redirectTo: ''
   }
 ];
