@@ -10,7 +10,6 @@ import { LoaderService } from '../../services/loader.service';
 export class LoaderComponent {
 
   showLoading: Subject<boolean> = this.loaderService.showLoading;
-  showFinished: Subject<boolean> = this.loaderService.showFinished;
 
   constructor(private loaderService: LoaderService) { }
 }

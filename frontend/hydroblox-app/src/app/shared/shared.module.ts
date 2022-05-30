@@ -9,6 +9,7 @@ import { LoaderService } from './services/loader.service';
 import { ErrorSnackService } from './services/errorsnack.service';
 import { Web3Service } from './services/web3.service';
 import { DistributorContractService } from './services/distributorcontract.service';
+import { ToolbarModule } from './components/toolbar/toolbar.module';
 
 @NgModule({
   declarations: [],
@@ -20,7 +21,8 @@ import { DistributorContractService } from './services/distributorcontract.servi
     MatIconModule,
     MatGridListModule,
     MatSnackBarModule,
-    LoaderModule
+    LoaderModule,
+    ToolbarModule
   ],
   providers: [
     ErrorSnackService,

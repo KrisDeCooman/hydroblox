@@ -1,7 +1,27 @@
 <mat-grid-list cols="1" rowHeight="fit">
-  <mat-grid-tile rowspan="2"></mat-grid-tile>
+  <mat-grid-tile rowspan="1"></mat-grid-tile>
   <mat-grid-tile>
     <h1>You are logged in into the HydroBlox Simulator</h1>
   </mat-grid-tile>
-  <mat-grid-tile rowspan="5"></mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-raised-button color=primary [disabled]="!isConsumptionMeter" (click)="onContinueAsConsumptionMeterClicked()">
+      <span>Continue as consumption meter</span>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-raised-button color=primary [disabled]="!isProductionMeter" (click)="onContinueAsProductionMeterClicked()">
+      <span>Continue as production meter</span>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-raised-button color=primary [disabled]="!isDistributor" (click)="onContinueAsDistributorClicked()">
+      <span>Continue as distributor</span>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-raised-button color=primary [disabled]="!isAuthority" (click)="onContinueAsAuthorityClicked()">
+      <span>Continue as authority</span>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="1"></mat-grid-tile>
 </mat-grid-list>
