@@ -12,9 +12,29 @@ export class DistributorContractService {
     async isOwner(): Promise<boolean> {
         var contract = this.web3Service.getDistributorContract();
         var result = await contract.methods.isOwner().call();
-
-        alert('isOwner: ' + result);
-
         return result;
+    }
+
+    async currentState(): Promise<string> {
+      var contract = this.web3Service.getDistributorContract();
+      var result: string = await contract.methods.state().call();
+
+      if (result === '0') {
+        return 'Enrollment';
+      }
+      else if (result === '1') {
+        return 'Running';
+      }
+      else if (result === '2') {
+        return 'Finished';
+      }
+      else {
+        return 'Unkown'
+      }
+    }
+
+    async transitionToNextState(): Promise<void> {
+      var contract = this.web3Service.getDistributorContract();
+      await contract.methods.transitionToNextState().send();
     }
 }

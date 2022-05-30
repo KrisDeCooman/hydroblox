@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { ChoiceModule } from './choice/choice.module';
 import { ChoiceComponent } from './choice/choice.component';
 import { ConnectedGuard } from '../shared/guards/connected.guard';
+import { DistributorComponent } from './distributor/distributor.component';
+import { DistributorModule } from './distributor/distributor.module';
 
 const routes: Routes = [
   {
@@ -17,6 +19,11 @@ const routes: Routes = [
     canActivate: [ConnectedGuard]
   },
   {
+    path: 'distributor',
+    component: DistributorComponent,
+    canActivate: [ConnectedGuard]
+  },
+  {
     path: '**',
     redirectTo: ''
   }
@@ -26,6 +33,7 @@ const routes: Routes = [
   imports: [
     HomeModule,
     ChoiceModule,
+    DistributorModule,
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]
