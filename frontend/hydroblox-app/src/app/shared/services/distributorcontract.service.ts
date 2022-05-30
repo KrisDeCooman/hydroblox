@@ -22,8 +22,7 @@ export class DistributorContractService {
         var contract = this.web3Service.getDistributorContract();
         result = await contract.methods.isOwner().call();
       }
-      catch (error) {
-        console.error(error);
+      catch {
         this.snackService.showError(ErrorCodes.Unexpected);
       }
       finally {
@@ -41,8 +40,7 @@ export class DistributorContractService {
         var contract = this.web3Service.getDistributorContract();
         result = await contract.methods.state().call();
       }
-      catch (error) {
-        console.error(error);
+      catch {
         this.snackService.showError(ErrorCodes.Unexpected);
       }
       finally {
@@ -70,8 +68,7 @@ export class DistributorContractService {
         var contract = this.web3Service.getDistributorContract();
         await contract.methods.transitionToNextState().send();
       }
-      catch (error) {
-        console.error(error);
+      catch {
         this.snackService.showError(ErrorCodes.Unexpected);
       }
       finally {
