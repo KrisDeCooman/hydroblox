@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LoaderService } from './loader.service';
 import { Web3Service } from './web3.service';
 
 @Injectable({
@@ -6,7 +7,9 @@ import { Web3Service } from './web3.service';
 })
 export class DistributorContractService {
 
-    constructor(private web3Service: Web3Service) {
+    constructor(
+      private web3Service: Web3Service,
+      private loadService: LoaderService) {
     }
 
     async isOwner(): Promise<boolean> {
@@ -34,7 +37,13 @@ export class DistributorContractService {
     }
 
     async transitionToNextState(): Promise<void> {
-      var contract = this.web3Service.getDistributorContract();
-      await contract.methods.transitionToNextState().send();
+      this.loadService.show();
+      try {
+        var contract = this.web3Service.getDistributorContract();
+        await contract.methods.transitionToNextState().send();
+      }
+      finally {
+        this.loadService.hide();
+      }
     }
 }
