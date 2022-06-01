@@ -3,10 +3,10 @@
 The HydroBlox project was developed as part of the Blockchain@Home education at Howest.
 
 Table of content
-- [Problem statement](?anchor=Problem-statement)
-- [Analysis & Design decisions](?anchor=Analysis-&-Design-decisions)
-- [Usage](?anchor=usage)
-- [Authors](?anchor=authors)
+- [Problem statement](#problem-statement)
+- [Analysis & Design decisions](#analysis--design-decisions)
+- [Usage](#usage)
+- [Authors](#authors)
 
 ## Problem statement
 Due to climate change, we are experiencing more droughts, which are having an impact on nature and our scarce water supply. Every year we are seeing more and more news articles that the situation is becoming more problematic.

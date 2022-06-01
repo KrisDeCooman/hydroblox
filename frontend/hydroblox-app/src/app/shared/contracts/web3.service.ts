@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { Constants } from './constants';
-import { ErrorCodes, ErrorSnackService } from './errorsnack.service';
+import { ErrorCodes, ErrorSnackService } from '../services/errorsnack.service';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import { Router } from '@angular/router';
