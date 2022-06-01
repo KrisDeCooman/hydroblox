@@ -4,12 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ToolbarModule } from './components/toolbar/toolbar.module';
 import { LoaderModule } from './components/loader/loader.module';
 import { LoaderService } from './services/loader.service';
 import { ErrorSnackService } from './services/errorsnack.service';
-import { Web3Service } from './services/web3.service';
-import { DistributorContractService } from './services/distributorcontract.service';
-import { ToolbarModule } from './components/toolbar/toolbar.module';
+import { Web3Service } from './contracts/web3.service';
+import { DistributorContractService } from './contracts/distributorcontract.service';
 
 @NgModule({
   declarations: [],

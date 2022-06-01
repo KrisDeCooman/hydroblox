@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Web3Service } from 'src/app/shared/services/web3.service';
+import { Web3Service } from 'src/app/shared/contracts/web3.service';
 
 @Component({
   templateUrl: './home.component.html',

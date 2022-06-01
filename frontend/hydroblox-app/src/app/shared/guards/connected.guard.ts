@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
-import { Web3Service } from "../services/web3.service";
+import { Web3Service } from "../contracts/web3.service";
 
 @Injectable({
     providedIn: 'root'

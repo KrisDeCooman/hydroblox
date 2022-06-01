@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DistributorContractService } from 'src/app/shared/services/distributorcontract.service';
+import { DistributorContractService } from 'src/app/shared/contracts/distributorcontract.service';
 
 @Component({
   templateUrl: './choice.component.html',
