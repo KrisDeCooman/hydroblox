@@ -16,11 +16,11 @@ contract HydroBloxAuthority is MultiOwnable {
         productionMeter = new HydroBloxProductionMeter();
     }
 
-    function issueConsumptionMeter() external onlyOwner {
+    function issueConsumptionMeter() external {
         consumptionMeter.safeMint(msg.sender);
     }
 
-    function issueProductionMeter() external onlyOwner {
+    function issueProductionMeter() external {
         productionMeter.safeMint(msg.sender);
     }
 }
