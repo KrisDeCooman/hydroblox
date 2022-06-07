@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthorityContractService } from 'src/app/shared/contracts/authoritycontract.service';
 import { DistributorContractService } from 'src/app/shared/contracts/distributorcontract.service';
 
 @Component({
@@ -15,11 +16,13 @@ export class ChoiceComponent implements OnInit {
 
   constructor(
     private distributorContractService: DistributorContractService,
+    private authorityContractService: AuthorityContractService,
     private router: Router) {
   }
 
   async ngOnInit(): Promise<void> {
     this.isDistributor = await this.distributorContractService.isOwner();
+    this.isAuthority = await this.authorityContractService.isOwner();
   }
 
   async onContinueAsConsumptionMeterClicked() {

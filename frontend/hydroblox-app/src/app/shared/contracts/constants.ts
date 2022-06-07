@@ -3,8 +3,8 @@ import { AbiItem } from 'web3-utils';
 export class Constants {
 
     static readonly NetworkId: string = "0x4"; // Rinkeby Test Network
-    static readonly DistributorAddress = "0xE45C6975DDc399D9aA3E807Daf1609c4d45a753E";
-    static readonly AuthorityAddress = "0x73f33dd710c1e2723BCC9bEA7e4F3d5B4b3d29D4";
+    static readonly DistributorAddress = "0xD0C94dE29A62D94BaCB88e1D6a5741d208Ac0ef4";
+    static readonly AuthorityAddress = "0xc954697B3aA7c7810Dd972f10455e56C733DdbA5";
     
     static readonly DistributorAbi: AbiItem[] = [
 		{
@@ -396,14 +396,26 @@ export class Constants {
 			"type": "function"
 		},
 		{
-			"inputs": [],
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_consumptionMeterAddress",
+					"type": "address"
+				}
+			],
 			"name": "issueConsumptionMeter",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
-			"inputs": [],
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_productionMeterAddress",
+					"type": "address"
+				}
+			],
 			"name": "issueProductionMeter",
 			"outputs": [],
 			"stateMutability": "nonpayable",
