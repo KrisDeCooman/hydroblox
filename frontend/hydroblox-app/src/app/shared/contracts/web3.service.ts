@@ -15,6 +15,7 @@ export class Web3Service {
 
     private web3: Web3 | undefined;
     private distributor : Contract | undefined;
+    private authority : Contract | undefined;
 
     constructor(
         zone: NgZone,
@@ -89,11 +90,16 @@ export class Web3Service {
         this.web3 = new Web3(window.ethereum);
         this.web3.defaultAccount = accounts[0];
         this.distributor = new this.web3.eth.Contract(Constants.DistributorAbi, Constants.DistributorAddress, { from: accounts[0] });
+        this.authority = new this.web3.eth.Contract(Constants.AuthorityAbi, Constants.AuthorityAddress, { from: accounts[0] });
 
         return true;
     }
 
     public getDistributorContract(): Contract {
         return this.distributor!;
+    }
+
+    public getAuthorityContract(): Contract {
+        return this.authority!;
     }
 }
