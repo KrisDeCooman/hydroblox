@@ -7,6 +7,8 @@ import { ChoiceComponent } from './choice/choice.component';
 import { ConnectedGuard } from '../shared/guards/connected.guard';
 import { DistributorComponent } from './distributor/distributor.component';
 import { DistributorModule } from './distributor/distributor.module';
+import { ConsumptionMeterComponent } from './consumption/consumption-meter.component';
+import { ConsumptionMeterModule } from './consumption/consumption-meter.module';
 
 const routes: Routes = [
   {
@@ -24,6 +26,11 @@ const routes: Routes = [
     canActivate: [ConnectedGuard]
   },
   {
+    path: 'consumption-meter',
+    component: ConsumptionMeterComponent,
+    canActivate: [ConnectedGuard]
+  },
+  {
     path: '**',
     redirectTo: ''
   }
@@ -34,6 +41,7 @@ const routes: Routes = [
     HomeModule,
     ChoiceModule,
     DistributorModule,
+    ConsumptionMeterModule,
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]

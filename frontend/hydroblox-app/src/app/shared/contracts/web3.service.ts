@@ -9,16 +9,19 @@ import { Router } from '@angular/router';
 declare const window: any;
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class Web3Service {
 
     private web3: Web3 | undefined;
-    private distributor : Contract | undefined;
+    private distributor: Contract | undefined;
+    private storage: Contract | undefined;
+    private token: Contract | undefined;
+    private consumptionMeter: Contract | undefined;
 
     constructor(
         zone: NgZone,
-        router: Router, 
+        router: Router,
         private errorSnackService: ErrorSnackService) {
 
         // see: https://docs.metamask.io/guide/ethereum-provider.html#events
@@ -33,7 +36,7 @@ export class Web3Service {
         }
     }
 
-    public isConnected() : boolean {
+    public isConnected(): boolean {
         return this.web3 != undefined;
     }
 
@@ -85,10 +88,13 @@ export class Web3Service {
         }
 
         console.log('Connected to Metamask!');
-        
+
         this.web3 = new Web3(window.ethereum);
         this.web3.defaultAccount = accounts[0];
         this.distributor = new this.web3.eth.Contract(Constants.DistributorAbi, Constants.DistributorAddress, { from: accounts[0] });
+        this.storage = new this.web3.eth.Contract(Constants.StorageAbi, Constants.StorageAddress, { from: accounts[0] });
+        this.token = new this.web3.eth.Contract(Constants.TokenAbi, Constants.TokenAddress, { from: accounts[0] });
+        this.consumptionMeter = new this.web3.eth.Contract(Constants.ConsumptionMeterAbi, Constants.consumptionMeterAddress, { from: accounts[0] });
 
         return true;
     }
@@ -96,4 +102,19 @@ export class Web3Service {
     public getDistributorContract(): Contract {
         return this.distributor!;
     }
+
+    public getStorageContract(): Contract {
+        return this.storage!;
+    }
+
+    public getTokenContract(): Contract {
+        return this.token!;
+    }
+
+    public getConsumptionMeterContract(): Contract {
+        return this.consumptionMeter!;
+    }
+
+
+
 }
