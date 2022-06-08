@@ -9,6 +9,8 @@ import { DistributorComponent } from './distributor/distributor.component';
 import { DistributorModule } from './distributor/distributor.module';
 import { AuthorityComponent } from './authority/authority.component';
 import { AuthorityModule } from './authority/authority.module';
+import { ConsumptionMeterComponent } from './consumption/consumption-meter.component';
+import { ConsumptionMeterModule } from './consumption/consumption-meter.module';
 
 const routes: Routes = [
   {
@@ -31,6 +33,11 @@ const routes: Routes = [
     canActivate: [ConnectedGuard]
   },
   {
+    path: 'consumption-meter',
+    component: ConsumptionMeterComponent,
+    canActivate: [ConnectedGuard]
+  },
+  {
     path: '**',
     redirectTo: ''
   }
@@ -42,6 +49,7 @@ const routes: Routes = [
     ChoiceModule,
     DistributorModule,
     AuthorityModule,
+    ConsumptionMeterModule,
     RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })
   ],
   exports: [RouterModule]

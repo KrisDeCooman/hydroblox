@@ -1,0 +1,26 @@
+<mat-grid-list cols="1" rowHeight="fit">
+    <mat-grid-tile rowspan="1"></mat-grid-tile>
+    <mat-grid-tile>
+        <h1>You are logged in as HydroBlox consumption</h1>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <span>Current state: {{ currentState }}</span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <span>Subscribed: {{ subscriptionState }}</span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <span>HBT balance : {{ tokenBalance }}</span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <button mat-raised-button color=primary [disabled]="subscriptionState" (click)="subscribe()">
+            <span>Subscribe</span>
+        </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <button mat-raised-button color=primary [disabled]="!hasTokens" (click)="consumeTokens()">
+            <span>Consume Water</span>
+        </button>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="3"></mat-grid-tile>
+</mat-grid-list>

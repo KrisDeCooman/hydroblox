@@ -15,7 +15,10 @@ export class Web3Service {
 
     private web3: Web3 | undefined;
     private distributor : Contract | undefined;
-    private authority : Contract | undefined;
+    private authority: Contract | undefined;
+    private storage: Contract | undefined;
+    private token: Contract | undefined;
+    private consumptionMeter: Contract | undefined;
 
     constructor(
         private zone: NgZone,
@@ -64,6 +67,18 @@ export class Web3Service {
 
     public getAuthorityContract(): Contract {
         return this.authority!;
+    }
+
+    public getStorageContract(): Contract {
+      return this.storage!;
+    }
+
+    public getTokenContract(): Contract {
+      return this.token!;
+    }
+
+    public getConsumptionMeterContract(): Contract {
+      return this.consumptionMeter!;
     }
 
     private async createWeb3() : Promise<boolean> {
@@ -124,6 +139,9 @@ export class Web3Service {
 
         this.distributor = new this.web3!.eth.Contract(Constants.DistributorAbi, Constants.DistributorAddress, { from: defaultAccount });
         this.authority = new this.web3!.eth.Contract(Constants.AuthorityAbi, Constants.AuthorityAddress, { from: defaultAccount });
+        this.storage = new this.web3!.eth.Contract(Constants.StorageAbi, Constants.StorageAddress, { from: defaultAccount });
+        this.token = new this.web3!.eth.Contract(Constants.TokenAbi, Constants.TokenAddress, { from: defaultAccount });
+        this.consumptionMeter = new this.web3!.eth.Contract(Constants.ConsumptionMeterAbi, Constants.consumptionMeterAddress, { from: defaultAccount });
 
         this.reloadPageOnEvent(this.distributor, 'StateTransitioned');
     }
