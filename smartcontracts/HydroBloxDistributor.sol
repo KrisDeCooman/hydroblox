@@ -13,6 +13,8 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
 
     event ConsumerSubscribed(address indexed consumer, uint subscriptionRunId);
     event ProducerSubscribed(address indexed producer, uint subscriptionRunId);
+    event TokensProduced(address indexed producer, uint amount);
+    event TokensConsumed(address indexed consumer, uint amount);
     event TokensClaimedByConsumer(address indexed consumer, uint amount);
     event EtherClaimedByProducer(address indexed producer, uint amount);
 
@@ -66,6 +68,16 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
     function produce(uint liters) external checkSubscribedProducer(true) isInState(SubscriptionStates.Running) {
         token.mint(address(this), liters);
         store.updateOnTokensMinted(msg.sender, liters);
+        emit TokensProduced(msg.sender, liters);
+    }
+
+    function consume(uint liters) external verifyConsumptionMeter {
+        token.burn(msg.sender, liters);
+        emit TokensConsumed(msg.sender, liters);
+    }
+
+    function readAvailableTokens() view external verifyConsumptionMeter returns (uint availableTokens) {
+        availableTokens = token.balanceOf(msg.sender);
     }
 
     function claimTokensAsConsumer() external checkSubscribedConsumer(true) isNotInState(SubscriptionStates.Enrollment) {
@@ -106,13 +118,4 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
     function onTransitionToFinished() override internal {
         store.updateOnSubscriptionFinished(address(this).balance);
     }
-
-    function readAvailableTokens() view external checkConsumer(true) isNotInState(SubscriptionStates.Enrollment) returns(uint availableTokens){
-        availableTokens = token.balanceOf(msg.sender);
-    }
-
-    function waterConsumed(uint amount) external checkConsumer(true) isNotInState(SubscriptionStates.Enrollment) {
-    	token.burn(msg.sender,amount);
-    }
-
 }
