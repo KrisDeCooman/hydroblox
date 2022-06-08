@@ -64,18 +64,18 @@ HBT tokens are minted when a producer produces water. HBT tokens are burned when
 
 The HydroBloxDistributor is the main smart contract and uses most of the other smart contacts discussed here.
 Both consumers and producers call this contract when they want to enroll into the HydroBlox drinkable water distribution process.
-Consumers need to pay in ether when they want to enroll. Producers are paid in ether when they produce water.
-Enrolled consumers are entitled to claim HBT tokens, which they can then use to consume drinkable water.
+Consumers need to pay in ether when they want to subscribe. Producers are paid in ether when they produce water.
+Subscribed consumers are entitled to claim HBT tokens, which they can then use to consume drinkable water.
 
 #### HydroBloxStorage
 
-The HydroBloxDistributor smart contract uses the HydroBloxStorage contract to keep track of the enrolled consumers, enrolled producers, the HBT tokens to divide and the ether to divide.
+The HydroBloxDistributor smart contract uses the HydroBloxStorage contract to keep track of the subscribed consumers, subscribed producers, the HBT tokens to divide and the ether to divide.
 
 #### HydroBloxStateMachine
 
 The HydroBloxDistributor smart contract implements the HydroBloxStateMachine contract, which is a representation of a subscription state machine.
 The state machine can be in states:
-- Enrollment: during this state, consumers and producers can enroll for the upcoming subscription run
+- Enrollment: during this state, consumers and producers can enroll (subscribe) for the upcoming subscription run
 - Running: during this state, producers can produce water and consumers can claim HBT tokens
 - Finished: during this state, producers can claim their earned ether and consumers can claim HBT tokens
 
@@ -85,6 +85,8 @@ Having a fixed set of consumers and producers enables us to evenly divide the et
 We chose to transition from one state to the next one manually, by calling a function on the smart contract.
 We do this for testing purposes. In reality, we would implement the transitions to happen automatically tiggered by time (using the block number).
 
+TODO: fix naming in image
+
 ![image](https://user-images.githubusercontent.com/25088136/169668849-38bf3047-15a2-4592-a834-d17211a8f575.png)
 
 
@@ -92,7 +94,7 @@ We do this for testing purposes. In reality, we would implement the transitions 
 #### HydroBloxConsumptionMeter
 
 The HydroBloxConsumptionMeter (HBCM) smart contract is a DID representation for a consumption meter, implemented as an ERC721 token (NFT).
-A physical consumption meter will need to have a HBCM token in its wallet in order to identity itself to the HydroBloxDistributor smart contract when enrolling as consumer.
+A physical consumption meter will need to have a HBCM token in its wallet in order to identity itself to the HydroBloxDistributor smart contract when subscribing as consumer.
 Currently no claims are assigned to this identity.
 In the future, claims could be added such as the amount of persons using this consumption meter.
 HBT tokens could then be divided taking the amount of persons into account.
@@ -100,7 +102,7 @@ HBT tokens could then be divided taking the amount of persons into account.
 #### HydroBloxProductionMeter
 
 The HydroBloxProductionMeter (HBPM) smart contract is a DID representation for a production meter, implemented as an ERC721 token (NFT).
-A physical production meter will need to have a HBPM token in its wallet in order to identity itself to the HydroBloxDistributor smart contract when enrolling as producer.
+A physical production meter will need to have a HBPM token in its wallet in order to identity itself to the HydroBloxDistributor smart contract when subscribing as producer.
 Currently no claims are assigned to this identity.
 
 #### HydroBloxAuthority
@@ -117,20 +119,19 @@ The owners are for example able to transition the state machine from one state t
 
 Below we give an example of a typical customer journey who wants to participate in the Hydroblox blockchain.  A future customer, named "Jenny" should first get a  HydroBloxConsumptionMeter (HBCM). With this meter, she can consume water and every time water is used the HBCM will burn the same amount of HBT. 
 
-The HBCM gets an NFT (ERC721 ) from a central authority. This authority could be the organization that installs the physical consumption meters. This NTF will be later used to verify that the address that wants to enroll in the HBT blockchain for a period as a consumer is well and truly an HBCM.
+The HBCM gets an NFT (ERC721) from a central authority. This authority could be the organization that installs the physical consumption meters. This NTF will be later used to verify that the address that wants to subscribe in the HBT blockchain for a period as a consumer is well and truly an HBCM.
 
- Once the HBCM got the NTF it can enroll for the current subscriptionRunId. This
-subscriptionRunId represents a period of time during which the HBCM can claim their share of the minted HBT in that period of time. To enroll for a subscriptionRunId , a fixed fee in Ether needs be paid, in our example 1 ETH. This fee will be used later to reimburse the producers of water for the cost they have to make such as maintenance of the reservoirs, wages of staff etc.
+Once the HBCM got the NTF it can subscribe for the current subscription run. The subscription run represents a period of time during which the HBCM can claim their share of the minted HBT in that period of time. To enroll for the current run, a fixed fee in Ether needs be paid, in our example 1 ETH. This fee will be used later to reimburse the producers of water for the cost they have to make such as maintenance of the reservoirs, wages of staff etc.
 
-Producers, represented by a HydroBloxProductionMete(HBPM) mint HBT. Every time it rains, the HBPM will register how much water gets into the water reservoir of the producer and will mint the same amount in HBT. Producers follow a similar process as the consumers to subscribe for a period. Once a consumer/producer is enrolled,we wait until the state of the blockchain gets changed from "Enrollment"( the period during which producers/consumers can enroll) to "Running" ( the period during which producers/consumers produce/claim tokens if subscribed). With modifiers we ensure that a consumer/ producer can only subscribe once and that only HBT/ETH can be claimed if subscribed for that period.
+Producers, represented by a HydroBloxProductionMeter (HBPM) mint HBT. Every time it rains, the HBPM will register how much water gets into the water reservoir of the producer and will mint the same amount in HBT. Producers follow a similar process as the consumers to subscribe for a period. Once a consumer/producer is subscribed, we wait until the state of the blockchain gets changed from "Enrollment" (the period during which producers/consumers can subscribe) to "Running" (the period during which producers/consumers produce/claim tokens if subscribed). With modifiers we ensure that a consumer/producer can only subscribe once and that only HBT/ETH can be claimed if subscribed for that period.
 
 We assume that there is already 1 consumer "Jos" and 1 producer "De Watergroep" being subscribed to the same subscription period as Jenny.
 
-Let's say that it rains and that the HBPM of De Watergroep mints 100 HBT. The total amount of tokens minted will be saved as the TokensToDivide variable. Jos can claim his part of the minted tokens (50), as there are in our example 2 consumers. His part of the minted tokens is saved under TokensToClaim  and  is calculated by  tokensToDivide/amount of consumers subscribed. To ensure that Jos can not claim more tokens than his fair share, we also save the tokens already claimed by each consumer under tokensAlreadyClaimed. Jenny decides that she doesn’t claim her tokens yet.
+Let's say that it rains and that the HBPM of De Watergroep mints 100 HBT. The total amount of tokens minted will be saved as the TokensToDivide variable. Jos can claim his part of the minted tokens (50), as there are in our example 2 consumers. His part of the minted tokens is saved under TokensToClaim and is calculated by tokensToDivide/amount of consumers subscribed. To ensure that Jos can not claim more tokens than his fair share, we also save the tokens already claimed by each consumer under tokensAlreadyClaimed. Jenny decides that she doesn’t claim her tokens yet.
 
-Later it rains again and 30 HBT gets minted. Jos can now only claim 15 HBT(TokensToClaim(65)-tokensAlreadyClaimed(50)). Jenny however can still claim her 65 HBT.
+Later it rains again and 30 HBT gets minted. Jos can now only claim 15 HBT (TokensToClaim(65)-tokensAlreadyClaimed(50)). Jenny however can still claim her 65 HBT.
 
-Once the period is finished, the state will change to the “Finished” state. No HBT can be minted anymore in this state and. Consumers can still claim their share of HBT and producers can claim Ether for every HBT they minted in proportion to the total minted HBT of that period. In this example there were 2 consumers, who paid 1 ETH each and only 1 producer. So in this case De Watergroep can claim 2 ETH.
+Once the period is finished, the state will change to the "Finished" state. No HBT can be minted anymore in this state. Consumers can still claim their share of HBT and producers can claim Ether for every HBT they minted in proportion to the total minted HBT of that period. In this example there were 2 consumers, who paid 1 ETH each and only 1 producer. So in this case De Watergroep can claim 2 ETH.
 
 After the period is finished we will transition to "Enrollment" state again. During this transition we will update the subscriptionRunId  with +1 and tokens/ETH that were not claimed will be "transferred" to tokensToDivide/EtherToDivide such that consumers/producers can claim these orphaned tokens/ETH during the next "Running" state.
 
@@ -138,6 +139,7 @@ After the period is finished we will transition to "Enrollment" state again. Dur
 ### Frontend
 
 angular
+googled for the best frontend framework to be used, but concluded that all frameworks should be usable
 
 ### Hosting
 

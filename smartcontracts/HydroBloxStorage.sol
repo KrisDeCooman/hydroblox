@@ -34,22 +34,22 @@ contract HydroBloxStorage is Ownable {
         amountOfConsumers = 0;
     }
 
-    function isConsumer(address consumerAddress) external view returns (bool) {
+    function isSubscribedConsumer(address consumerAddress) external view returns (bool) {
         Consumer storage consumer = consumers[consumerAddress];
         return consumer.exists && subscriptionRunId == consumer.subscriptionRunId;
     }
 
-    function isProducer(address producerAddress) external view returns (bool) {
+    function isSubscribedProducer(address producerAddress) external view returns (bool) {
         Producer storage producer = producers[producerAddress];
         return producer.exists && subscriptionRunId <= producer.subscriptionRunId;
     }
 
-    function addConsumer(address consumerAddress) external onlyOwner {
+    function subscribeConsumer(address consumerAddress) external onlyOwner {
         consumers[consumerAddress] = Consumer(true, 0, subscriptionRunId);
         amountOfConsumers += 1;
     }
 
-    function addProducer(address producerAddress) external onlyOwner {
+    function subscribeProducer(address producerAddress) external onlyOwner {
         producers[producerAddress] = Producer(true, 0, subscriptionRunId);
     }
 
