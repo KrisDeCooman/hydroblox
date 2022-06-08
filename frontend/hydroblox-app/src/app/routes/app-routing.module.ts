@@ -42,7 +42,7 @@ const routes: Routes = [
     ChoiceModule,
     DistributorModule,
     AuthorityModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })
   ],
   exports: [RouterModule]
 })
