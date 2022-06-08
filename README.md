@@ -3,7 +3,7 @@
 The HydroBlox project was developed as part of the Blockchain@Home education at Howest.
 
 ## Table of content
-- [01. Problem statement](docs/01.problem-statement.md)
+- [01. Problem statement](docs/01-problem-statement.md)
 - [02. General design principles](docs/02-general-design-principles.md)
 - [03. HydroBlox smart contracts](docs/03-hydroblox-smart-contracts.md)
 - [04. HydroBlox example](docs/04-hydroblox-example.md)
