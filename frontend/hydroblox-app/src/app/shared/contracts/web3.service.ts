@@ -18,9 +18,12 @@ export class Web3Service {
     private authority : Contract | undefined;
 
     constructor(
-        zone: NgZone,
-        router: Router, 
+        private zone: NgZone,
+        private router: Router, 
         private errorSnackService: ErrorSnackService) {
+
+        // reload page when routed to same page
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
         // see: https://docs.metamask.io/guide/ethereum-provider.html#events
         var onChainOrAccountsChanged = () => {
@@ -39,9 +42,32 @@ export class Web3Service {
     }
 
     public async connect(): Promise<boolean> {
-        // see: https://docs.metamask.io/guide/ethereum-provider.html#using-the-provider
 
-        this.web3 = undefined;
+        if (this.web3) {
+            this.web3.eth.clearSubscriptions((error: any, result: any) => {});
+            this.web3 = undefined;
+        }
+
+        var success = await this.createWeb3();
+        if (success) {
+            this.createContracts();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public getDistributorContract(): Contract {
+        return this.distributor!;
+    }
+
+    public getAuthorityContract(): Contract {
+        return this.authority!;
+    }
+
+    private async createWeb3() : Promise<boolean> {
+        // see: https://docs.metamask.io/guide/ethereum-provider.html#using-the-provider
 
         const provider = await detectEthereumProvider();
         if (!provider) {
@@ -89,17 +115,26 @@ export class Web3Service {
         
         this.web3 = new Web3(window.ethereum);
         this.web3.defaultAccount = accounts[0];
-        this.distributor = new this.web3.eth.Contract(Constants.DistributorAbi, Constants.DistributorAddress, { from: accounts[0] });
-        this.authority = new this.web3.eth.Contract(Constants.AuthorityAbi, Constants.AuthorityAddress, { from: accounts[0] });
 
         return true;
     }
 
-    public getDistributorContract(): Contract {
-        return this.distributor!;
+    private createContracts() {
+        let defaultAccount : string = this.web3!.defaultAccount!;
+
+        this.distributor = new this.web3!.eth.Contract(Constants.DistributorAbi, Constants.DistributorAddress, { from: defaultAccount });
+        this.authority = new this.web3!.eth.Contract(Constants.AuthorityAbi, Constants.AuthorityAddress, { from: defaultAccount });
+
+        this.reloadPageOnEvent(this.distributor, 'StateTransitioned');
     }
 
-    public getAuthorityContract(): Contract {
-        return this.authority!;
+    private reloadPageOnEvent(contract: Contract, event: string) {
+        contract.events[event]({}, (error: string, data: any) => {
+            if (!error) {
+                console.log('Reloading current page due to event: ' + event);
+                var currentUrl = this.router.url;
+                this.zone.run(() => this.router.navigate([currentUrl]));
+            }
+        });
     }
 }

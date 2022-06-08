@@ -9,16 +9,11 @@ export abstract class BaseContractService {
       private snackService: ErrorSnackService) {
     }
 
-    protected async call<T>(contract: Contract, method: string, param1?: any): Promise<T> {
+    protected async call<T>(contract: Contract, method: string, ...params: any[]): Promise<T> {
       var result;
       try {
         this.loadService.show();
-        if (param1) {
-          result = await contract.methods[method](param1).call();
-        }
-        else {
-          result = await contract.methods[method]().call();
-        }
+        result = await contract.methods[method](...params).call();
       }
       catch (error: any) {
         var errorCode = new ErrorCodes(error.message);
@@ -30,16 +25,11 @@ export abstract class BaseContractService {
       return result;
     }
 
-    protected async send<T>(contract: Contract, method: string, param1?: any): Promise<T> {
+    protected async send<T>(contract: Contract, method: string, ...params: any[]): Promise<T> {
         var result;
         try {
           this.loadService.show();
-          if (param1) {
-            result = await contract.methods[method](param1).send();
-          }
-          else {
-            result = await contract.methods[method]().send();
-          }
+          result = await contract.methods[method](...params).send();
         }
         catch (error: any) {
           var errorCode = new ErrorCodes(error.message);
