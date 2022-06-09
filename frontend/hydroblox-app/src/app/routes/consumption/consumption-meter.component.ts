@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ConsumptionMeterContractService } from 'src/app/shared/contracts/consumptionmetercontract.service';
 import { DistributorContractService } from 'src/app/shared/contracts/distributorcontract.service';
 import { StorageContractService } from 'src/app/shared/contracts/storagecontract.service';
@@ -20,8 +19,7 @@ export class ConsumptionMeterComponent implements OnInit {
     constructor(
         private distributorContractService: DistributorContractService,
         private consumptionMeterContractService: ConsumptionMeterContractService,
-        private storageContractService: StorageContractService,
-        private router: Router) { }
+        private storageContractService: StorageContractService) { }
 
 
     async ngOnInit(): Promise<void> {
@@ -31,10 +29,14 @@ export class ConsumptionMeterComponent implements OnInit {
     }
 
     async consumeTokens() {
-        await this.router.navigate(['authority']);
+        
     }
 
     async subscribe() {
+
+    }
+
+    async claimTokens() {
 
     }
 }

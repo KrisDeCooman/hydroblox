@@ -27,4 +27,9 @@ export class StorageContractService extends BaseContractService {
       var account = this.web3Service.getDefaultAccount();
       return await super.call<boolean>(contract, 'isSubscribedProducer', account);
     }
+
+    async subscriptionRunId(): Promise<number> {
+      var contract = this.web3Service.getStorageContract();
+      return await super.call<number>(contract, 'subscriptionRunId');
+    }
 }

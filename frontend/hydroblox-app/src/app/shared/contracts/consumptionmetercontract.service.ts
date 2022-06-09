@@ -7,7 +7,6 @@ import { Web3Service } from './web3.service';
 @Injectable({
     providedIn: 'root'
 })
-
 export class ConsumptionMeterContractService extends BaseContractService {
 
     constructor(
