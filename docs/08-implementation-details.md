@@ -15,11 +15,27 @@ features to improve usability:
 
 ### Hosting
 
-- IPFS
-- volta (energy web): snel (blocktime 5 seconden) + cheap (low transaction cost)
-connect your metamask: https://pedroporky.medium.com/how-to-test-energy-webs-staking-mechanism-using-volta-testnet-tokens-223196b2b4c4
-get volta tokens from faucet: https://voltafaucet.energyweb.org/
-volta explorer: https://volta-explorer.energyweb.org/
+#### Smart contracts
+
+Our smart contracts are hosted on the Energy Web's Volta testnet. Energy Web is fast: it has a blocktime of less than 5 seconds. And Energy Web is relatively cheap: it has a low transaction cost.
+
+To connect your MetaMask to the Volta testnet, you need to add a new network with the following details:
+- Network name: Volta
+- New RPC URL: https://volta-rpc.energyweb.org
+- ChaindID: 73799
+- Symbol: VT
+- Blockexplorer: https://volta-explorer.energyweb.org/
+
+Volta tokens can be received from the faucet: https://voltafaucet.energyweb.org/
+Blocks and transaction can be explored using the Volta explorer: https://volta-explorer.energyweb.org/
+
+#### Frontend
+
+Our frontend is hosted on IPFS. To make our frontend compatible with IPFS, we needed to do two steps:
+- Change <base href> tag
+- Build our frontend as follows: ng build --prod --aot
+
+This will deliver some artifacts in the dist folder, that can then be uploaded to IPFS.
 
 ### Development
 
