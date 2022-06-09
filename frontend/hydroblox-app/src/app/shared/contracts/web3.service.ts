@@ -144,6 +144,8 @@ export class Web3Service {
         this.consumptionMeter = new this.web3!.eth.Contract(Constants.ConsumptionMeterAbi, Constants.consumptionMeterAddress, { from: defaultAccount });
 
         this.reloadPageOnEvent(this.distributor, 'StateTransitioned');
+        this.reloadPageOnEvent(this.distributor, 'TokensProduced');
+        this.reloadPageOnEvent(this.distributor, 'TokensConsumed');
     }
 
     private reloadPageOnEvent(contract: Contract, event: string) {
