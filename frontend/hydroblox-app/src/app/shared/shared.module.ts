@@ -9,7 +9,6 @@ import { LoaderModule } from './components/loader/loader.module';
 import { LoaderService } from './services/loader.service';
 import { ErrorSnackService } from './services/errorsnack.service';
 import { Web3Service } from './contracts/web3.service';
-import { DistributorContractService } from './contracts/distributorcontract.service';
 
 @NgModule({
   declarations: [],
@@ -27,8 +26,7 @@ import { DistributorContractService } from './contracts/distributorcontract.serv
   providers: [
     ErrorSnackService,
     LoaderService,
-    Web3Service,
-    DistributorContractService
+    Web3Service
   ]
 })
 export class SharedModule { }
