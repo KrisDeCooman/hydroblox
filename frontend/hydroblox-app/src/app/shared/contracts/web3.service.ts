@@ -17,7 +17,6 @@ export class Web3Service {
     private distributor : Contract | undefined;
     private authority: Contract | undefined;
     private storage: Contract | undefined;
-    private token: Contract | undefined;
     private consumptionMeter: Contract | undefined;
 
     constructor(
@@ -61,6 +60,10 @@ export class Web3Service {
         }
     }
 
+    public getDefaultAccount(): string {
+        return this.web3!.defaultAccount!;
+    }
+
     public getDistributorContract(): Contract {
         return this.distributor!;
     }
@@ -71,10 +74,6 @@ export class Web3Service {
 
     public getStorageContract(): Contract {
       return this.storage!;
-    }
-
-    public getTokenContract(): Contract {
-      return this.token!;
     }
 
     public getConsumptionMeterContract(): Contract {
@@ -140,7 +139,6 @@ export class Web3Service {
         this.distributor = new this.web3!.eth.Contract(Constants.DistributorAbi, Constants.DistributorAddress, { from: defaultAccount });
         this.authority = new this.web3!.eth.Contract(Constants.AuthorityAbi, Constants.AuthorityAddress, { from: defaultAccount });
         this.storage = new this.web3!.eth.Contract(Constants.StorageAbi, Constants.StorageAddress, { from: defaultAccount });
-        this.token = new this.web3!.eth.Contract(Constants.TokenAbi, Constants.TokenAddress, { from: defaultAccount });
         this.consumptionMeter = new this.web3!.eth.Contract(Constants.ConsumptionMeterAbi, Constants.consumptionMeterAddress, { from: defaultAccount });
 
         this.reloadPageOnEvent(this.distributor, 'StateTransitioned');

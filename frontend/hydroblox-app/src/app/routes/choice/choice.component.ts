@@ -25,7 +25,7 @@ export class ChoiceComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.isDistributor = await this.distributorContractService.isOwner();
     this.isAuthority = await this.authorityContractService.isOwner();
-    this.isConsumptionMeter = await this.consumptionMeterContractService.isConsumer();
+    this.isConsumptionMeter = await this.consumptionMeterContractService.isConsumptionMeter();
   }
 
   async onContinueAsConsumptionMeterClicked() {

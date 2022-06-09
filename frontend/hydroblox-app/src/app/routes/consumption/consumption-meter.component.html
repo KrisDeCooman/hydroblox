@@ -7,13 +7,13 @@
         <span>Current state: {{ currentState }}</span>
     </mat-grid-tile>
     <mat-grid-tile>
-        <span>Subscribed: {{ subscriptionState }}</span>
+        <span>Subscribed: {{ isSubscribedConsumer }}</span>
     </mat-grid-tile>
     <mat-grid-tile>
         <span>HBT balance : {{ tokenBalance }}</span>
     </mat-grid-tile>
     <mat-grid-tile>
-        <button mat-raised-button color=primary [disabled]="subscriptionState" (click)="subscribe()">
+        <button mat-raised-button color=primary [disabled]="isSubscribedConsumer" (click)="subscribe()">
             <span>Subscribe</span>
         </button>
     </mat-grid-tile>
