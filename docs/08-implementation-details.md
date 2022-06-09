@@ -16,7 +16,10 @@ features to improve usability:
 ### Hosting
 
 - IPFS
-- ethereum test net. which one. why? polygon in we wuold go to production? why?
+- volta (energy web): snel (blocktime 5 seconden) + cheap (low transaction cost)
+connect your metamask: https://pedroporky.medium.com/how-to-test-energy-webs-staking-mechanism-using-volta-testnet-tokens-223196b2b4c4
+get volta tokens from faucet: https://voltafaucet.energyweb.org/
+volta explorer: https://volta-explorer.energyweb.org/
 
 ### Development
 
@@ -33,3 +36,12 @@ Deployment of the smart contracts can easily be done using Remix, following thes
 Cloudflare?
 
 updateable smart contracts?
+
+beschrijven: chip op de smart meters die de access tot de blockchain zullen doen (consume/produce)
+consumption meter: deze zullen automatisch hun tokens claimen wanneer deze beschikbaar zijn
+-> zelfde voor production meter
+het zal ook de consumption meter zijn die tokens te koop zal aanbieden wanneer deze (te) veel tokens ter beschikking heeft
+het zal ook de consumption meter zijn die tokens zal aankopen wanneer deze te weinig heeft
+=> hebben de regels rond de prijszetting dan zelf in de hand
+
+wat met initiele PDF dat we gemaakt hebben? hierin verwerken of is dat reeds gebeurd?
