@@ -43,4 +43,15 @@ export class DistributorContractService extends BaseContractService {
       var contract = this.web3Service.getDistributorContract();
       await super.send<string>(contract, 'transitionToNextState');
     }
+
+    async tokenBalance(): Promise<number> {
+      var contract = this.web3Service.getDistributorContract();
+      var account = this.web3Service.getDefaultAccount();
+      return await super.call<number>(contract, 'tokenBalanceOf', account);
+    }
+
+    async tokenTotalSupply(): Promise<number> {
+      var contract = this.web3Service.getDistributorContract();
+      return await super.call<number>(contract, 'tokenTotalSupply');
+    }
 }

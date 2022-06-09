@@ -2,12 +2,12 @@ import { AbiItem } from 'web3-utils';
 
 export class Constants {
 
-	static readonly NetworkId: string = "0x4"; // Rinkeby Test Network
-	static readonly DistributorAddress = "0xD0C94dE29A62D94BaCB88e1D6a5741d208Ac0ef4";
-	static readonly AuthorityAddress = "0xc954697B3aA7c7810Dd972f10455e56C733DdbA5";
-	static readonly StorageAddress = "0x7af4464C5304fa40dEe3AeE8a44874b11c41108D";
-	static readonly TokenAddress = "0x741AcbE35BD4e760062e895775a807F414A03065";
-	static readonly consumptionMeterAddress = "0xc8BB3fd6CA4B40CAb461BA57e4A0D9017f04B157";
+	static readonly NetworkId: string = "0x12047"; // Volta Test Network (EnergyWeb)
+	static readonly DistributorAddress = "0xE45C6975DDc399D9aA3E807Daf1609c4d45a753E";
+	static readonly AuthorityAddress = "0x23D2Deb0f36d0F49229663cd39fD6Fda599EAd4e";
+	static readonly StorageAddress = "0x484a0056ce33C28516727843C421F4adBb73Dd5a";
+	static readonly consumptionMeterAddress = "0x52744937EE4E9FC1941af2F848C03D3acb08cB91";
+	static readonly productionMeterAddress = "0x24b120003afCEbFC07086296280a69B9a8a6845E";
 
 	static readonly DistributorAbi: AbiItem[] = [
 		{
@@ -42,7 +42,7 @@ export class Constants {
 					"type": "uint256"
 				}
 			],
-			"name": "ConsumerEnrolled",
+			"name": "ConsumerSubscribed",
 			"type": "event"
 		},
 		{
@@ -106,7 +106,7 @@ export class Constants {
 					"type": "uint256"
 				}
 			],
-			"name": "ProducerEnrolled",
+			"name": "ProducerSubscribed",
 			"type": "event"
 		},
 		{
@@ -139,6 +139,44 @@ export class Constants {
 				}
 			],
 			"name": "TokensClaimedByConsumer",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "consumer",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "TokensConsumed",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "producer",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "TokensProduced",
 			"type": "event"
 		},
 		{
@@ -182,6 +220,19 @@ export class Constants {
 			"type": "function"
 		},
 		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "liters",
+					"type": "uint256"
+				}
+			],
+			"name": "consume",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
 			"inputs": [],
 			"name": "consumptionMeter",
 			"outputs": [
@@ -192,20 +243,6 @@ export class Constants {
 				}
 			],
 			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "enrollAsConsumer",
-			"outputs": [],
-			"stateMutability": "payable",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "enrollAsProducer",
-			"outputs": [],
-			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
@@ -307,12 +344,58 @@ export class Constants {
 		},
 		{
 			"inputs": [],
+			"name": "subscribeAsConsumer",
+			"outputs": [],
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "subscribeAsProducer",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
 			"name": "token",
 			"outputs": [
 				{
 					"internalType": "contract HydroBloxToken",
 					"name": "",
 					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_address",
+					"type": "address"
+				}
+			],
+			"name": "tokenBalanceOf",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "tokenTotalSupply",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
 				}
 			],
 			"stateMutability": "view",
@@ -470,8 +553,8 @@ export class Constants {
 			"type": "function"
 		}
 	];
-	static readonly StorageAbi: AbiItem[] = [
 
+	static readonly StorageAbi: AbiItem[] = [
 		{
 			"inputs": [],
 			"stateMutability": "nonpayable",
@@ -495,32 +578,6 @@ export class Constants {
 			],
 			"name": "OwnershipTransferred",
 			"type": "event"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "consumerAddress",
-					"type": "address"
-				}
-			],
-			"name": "addConsumer",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "producerAddress",
-					"type": "address"
-				}
-			],
-			"name": "addProducer",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
 		},
 		{
 			"inputs": [],
@@ -598,7 +655,7 @@ export class Constants {
 					"type": "address"
 				}
 			],
-			"name": "isConsumer",
+			"name": "isSubscribedConsumer",
 			"outputs": [
 				{
 					"internalType": "bool",
@@ -617,7 +674,7 @@ export class Constants {
 					"type": "address"
 				}
 			],
-			"name": "isProducer",
+			"name": "isSubscribedProducer",
 			"outputs": [
 				{
 					"internalType": "bool",
@@ -673,6 +730,32 @@ export class Constants {
 		{
 			"inputs": [],
 			"name": "renounceOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "consumerAddress",
+					"type": "address"
+				}
+			],
+			"name": "subscribeConsumer",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "producerAddress",
+					"type": "address"
+				}
+			],
+			"name": "subscribeProducer",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
@@ -809,9 +892,9 @@ export class Constants {
 			"stateMutability": "nonpayable",
 			"type": "function"
 		}
-
 	];
-	static readonly TokenAbi: AbiItem[] = [
+
+	static readonly ConsumptionMeterAbi: AbiItem[] = [
 		{
 			"inputs": [],
 			"stateMutability": "nonpayable",
@@ -829,17 +912,42 @@ export class Constants {
 				{
 					"indexed": true,
 					"internalType": "address",
-					"name": "spender",
+					"name": "approved",
 					"type": "address"
 				},
 				{
-					"indexed": false,
+					"indexed": true,
 					"internalType": "uint256",
-					"name": "value",
+					"name": "tokenId",
 					"type": "uint256"
 				}
 			],
 			"name": "Approval",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "owner",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "operator",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "bool",
+					"name": "approved",
+					"type": "bool"
+				}
+			],
+			"name": "ApprovalForAll",
 			"type": "event"
 		},
 		{
@@ -877,9 +985,9 @@ export class Constants {
 					"type": "address"
 				},
 				{
-					"indexed": false,
+					"indexed": true,
 					"internalType": "uint256",
-					"name": "value",
+					"name": "tokenId",
 					"type": "uint256"
 				}
 			],
@@ -890,47 +998,17 @@ export class Constants {
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "owner",
-					"type": "address"
-				},
-				{
-					"internalType": "address",
-					"name": "spender",
-					"type": "address"
-				}
-			],
-			"name": "allowance",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "spender",
+					"name": "to",
 					"type": "address"
 				},
 				{
 					"internalType": "uint256",
-					"name": "amount",
+					"name": "tokenId",
 					"type": "uint256"
 				}
 			],
 			"name": "approve",
-			"outputs": [
-				{
-					"internalType": "bool",
-					"name": "",
-					"type": "bool"
-				}
-			],
+			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
 		},
@@ -938,7 +1016,7 @@ export class Constants {
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "account",
+					"name": "owner",
 					"type": "address"
 				}
 			],
@@ -957,7 +1035,7 @@ export class Constants {
 			"inputs": [
 				{
 					"internalType": "uint256",
-					"name": "amount",
+					"name": "tokenId",
 					"type": "uint256"
 				}
 			],
@@ -969,29 +1047,17 @@ export class Constants {
 		{
 			"inputs": [
 				{
-					"internalType": "address",
-					"name": "account",
-					"type": "address"
-				},
-				{
 					"internalType": "uint256",
-					"name": "amount",
+					"name": "tokenId",
 					"type": "uint256"
 				}
 			],
-			"name": "burnFrom",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "decimals",
+			"name": "getApproved",
 			"outputs": [
 				{
-					"internalType": "uint8",
+					"internalType": "address",
 					"name": "",
-					"type": "uint8"
+					"type": "address"
 				}
 			],
 			"stateMutability": "view",
@@ -1001,16 +1067,16 @@ export class Constants {
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "spender",
+					"name": "owner",
 					"type": "address"
 				},
 				{
-					"internalType": "uint256",
-					"name": "subtractedValue",
-					"type": "uint256"
+					"internalType": "address",
+					"name": "operator",
+					"type": "address"
 				}
 			],
-			"name": "decreaseAllowance",
+			"name": "isApprovedForAll",
 			"outputs": [
 				{
 					"internalType": "bool",
@@ -1018,49 +1084,7 @@ export class Constants {
 					"type": "bool"
 				}
 			],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "spender",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "addedValue",
-					"type": "uint256"
-				}
-			],
-			"name": "increaseAllowance",
-			"outputs": [
-				{
-					"internalType": "bool",
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "to",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				}
-			],
-			"name": "mint",
-			"outputs": [],
-			"stateMutability": "nonpayable",
+			"stateMutability": "view",
 			"type": "function"
 		},
 		{
@@ -1090,36 +1114,29 @@ export class Constants {
 			"type": "function"
 		},
 		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "tokenId",
+					"type": "uint256"
+				}
+			],
+			"name": "ownerOf",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
 			"inputs": [],
 			"name": "renounceOwnership",
 			"outputs": [],
 			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "symbol",
-			"outputs": [
-				{
-					"internalType": "string",
-					"name": "",
-					"type": "string"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "totalSupply",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
 			"type": "function"
 		},
 		{
@@ -1128,21 +1145,10 @@ export class Constants {
 					"internalType": "address",
 					"name": "to",
 					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
 				}
 			],
-			"name": "transfer",
-			"outputs": [
-				{
-					"internalType": "bool",
-					"name": "",
-					"type": "bool"
-				}
-			],
+			"name": "safeMint",
+			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
 		},
@@ -1160,11 +1166,70 @@ export class Constants {
 				},
 				{
 					"internalType": "uint256",
-					"name": "amount",
+					"name": "tokenId",
 					"type": "uint256"
 				}
 			],
-			"name": "transferFrom",
+			"name": "safeTransferFrom",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "from",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "to",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "tokenId",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bytes",
+					"name": "_data",
+					"type": "bytes"
+				}
+			],
+			"name": "safeTransferFrom",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "operator",
+					"type": "address"
+				},
+				{
+					"internalType": "bool",
+					"name": "approved",
+					"type": "bool"
+				}
+			],
+			"name": "setApprovalForAll",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes4",
+					"name": "interfaceId",
+					"type": "bytes4"
+				}
+			],
+			"name": "supportsInterface",
 			"outputs": [
 				{
 					"internalType": "bool",
@@ -1172,6 +1237,61 @@ export class Constants {
 					"type": "bool"
 				}
 			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "symbol",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "tokenId",
+					"type": "uint256"
+				}
+			],
+			"name": "tokenURI",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "from",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "to",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "tokenId",
+					"type": "uint256"
+				}
+			],
+			"name": "transferFrom",
+			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
 		},
@@ -1190,7 +1310,7 @@ export class Constants {
 		}
 	];
 
-	static readonly ConsumptionMeterAbi: AbiItem[] = [
+	static readonly ProductionMeterAbi: AbiItem[] = [
 		{
 			"inputs": [],
 			"stateMutability": "nonpayable",

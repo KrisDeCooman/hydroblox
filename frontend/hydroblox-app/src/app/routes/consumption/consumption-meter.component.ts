@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConsumptionMeterContractService } from 'src/app/shared/contracts/consumptionmetercontract.service';
+import { DistributorContractService } from 'src/app/shared/contracts/distributorcontract.service';
+import { StorageContractService } from 'src/app/shared/contracts/storagecontract.service';
 
 @Component({
     templateUrl: './consumption-meter.component.html',
@@ -11,19 +13,21 @@ export class ConsumptionMeterComponent implements OnInit {
 
     hasTokens: boolean = false;
     tokenBalance: number = 0;
-    subscriptionState: boolean = false;
+    isSubscribedConsumer: boolean = false;
 
     currentState: string = '';
 
-    constructor(private consumptionMeterContractService: ConsumptionMeterContractService,
+    constructor(
+        private distributorContractService: DistributorContractService,
+        private consumptionMeterContractService: ConsumptionMeterContractService,
+        private storageContractService: StorageContractService,
         private router: Router) { }
 
 
     async ngOnInit(): Promise<void> {
-        this.currentState = await this.consumptionMeterContractService.currentState();
-        this.tokenBalance = await this.consumptionMeterContractService.getTokenBalance();
-        this.subscriptionState = await this.consumptionMeterContractService.getSubscriptionState();
-
+        this.currentState = await this.distributorContractService.currentState();
+        this.tokenBalance = await this.distributorContractService.tokenBalance();
+        this.isSubscribedConsumer = await this.storageContractService.isSubscribedConsumer();
     }
 
     async consumeTokens() {
@@ -33,7 +37,4 @@ export class ConsumptionMeterComponent implements OnInit {
     async subscribe() {
 
     }
-
-
-
 }
