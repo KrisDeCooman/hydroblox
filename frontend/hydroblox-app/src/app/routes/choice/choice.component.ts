@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthorityContractService } from 'src/app/shared/contracts/authoritycontract.service';
 import { DistributorContractService } from 'src/app/shared/contracts/distributorcontract.service';
 import { ConsumptionMeterContractService } from 'src/app/shared/contracts/consumptionmetercontract.service';
+import { ProductionMeterContractService } from 'src/app/shared/contracts/productionmetercontract.service';
+
 
 @Component({
   templateUrl: './choice.component.html',
@@ -19,6 +21,7 @@ export class ChoiceComponent implements OnInit {
     private consumptionMeterContractService: ConsumptionMeterContractService,
     private distributorContractService: DistributorContractService,
     private authorityContractService: AuthorityContractService,
+    private productionMeterContractService: ProductionMeterContractService,
     private router: Router) {
   }
 
@@ -26,6 +29,7 @@ export class ChoiceComponent implements OnInit {
     this.isDistributor = await this.distributorContractService.isOwner();
     this.isAuthority = await this.authorityContractService.isOwner();
     this.isConsumptionMeter = await this.consumptionMeterContractService.isConsumptionMeter();
+    this.isProductionMeter = await this.productionMeterContractService.isProductionMeter();
   }
 
   async onContinueAsConsumptionMeterClicked() {
