@@ -11,6 +11,8 @@ import { AuthorityComponent } from './authority/authority.component';
 import { AuthorityModule } from './authority/authority.module';
 import { ConsumptionMeterComponent } from './consumption/consumption-meter.component';
 import { ConsumptionMeterModule } from './consumption/consumption-meter.module';
+import { ProductionMeterComponent } from './production/production-meter.component';
+import { ProductionMeterModule } from './production/production-meter.module';
 
 const routes: Routes = [
   {
@@ -38,6 +40,11 @@ const routes: Routes = [
     canActivate: [ConnectedGuard]
   },
   {
+    path: 'production-meter',
+    component: ProductionMeterComponent,
+    canActivate: [ConnectedGuard]
+  },
+  {
     path: '**',
     redirectTo: ''
   }
@@ -50,6 +57,7 @@ const routes: Routes = [
     DistributorModule,
     AuthorityModule,
     ConsumptionMeterModule,
+    ProductionMeterModule,
     RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })
   ],
   exports: [RouterModule]
