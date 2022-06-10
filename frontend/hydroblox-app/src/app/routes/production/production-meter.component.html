@@ -7,7 +7,7 @@
         <span>Current state: {{ currentState }}</span>
     </mat-grid-tile>
     <mat-grid-tile>
-        <button mat-raised-button color=primary  (click)="subscribe()">
+        <button mat-raised-button color=primary [disabled]="isSubscribedProducer" (click)="subscribe()">
           <span>enroll as producer</span>
         </button>
       </mat-grid-tile>
