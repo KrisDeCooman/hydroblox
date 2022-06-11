@@ -27,4 +27,5 @@ Once the consumer has approved the consumption meter to spend ether on his behal
 As we want to avoid price fluctuations, as a result of speculators that want to exploit our system for their own benefits, we came up with the following.
 The consumption meter will automatically sell HBT tokens when it has too many, based on its past usage.
 On the other hand, the consumption meter will also automatically buy tokens when it has too little.
-The price of an HBT token will be determined based on an fixed algorithm, known in advance that takes the current water supply into account.
+The price of an HBT token will be determined based on an fixed algorithm, known in advance, that takes the current water supply into account.
+The less water supply there is, the higher the price of the HBT token will be.
