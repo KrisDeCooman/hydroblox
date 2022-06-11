@@ -25,11 +25,11 @@ export abstract class BaseContractService {
       return result;
     }
 
-    protected async send<T>(contract: Contract, method: string, ...params: any[]): Promise<T> {
+    protected async send<T>(contract: Contract, method: string, value: number, ...params: any[]): Promise<T> {
         var result;
         try {
           this.loadService.show();
-          result = await contract.methods[method](...params).send();
+          result = await contract.methods[method](...params).send({ value });
         }
         catch (error: any) {
           var errorCode = new ErrorCodes(error.message);

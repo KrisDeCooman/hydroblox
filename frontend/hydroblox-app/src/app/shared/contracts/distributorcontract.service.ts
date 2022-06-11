@@ -41,7 +41,7 @@ export class DistributorContractService extends BaseContractService {
 
     async transitionToNextState(): Promise<void> {
       var contract = this.web3Service.getDistributorContract();
-      await super.send<string>(contract, 'transitionToNextState');
+      await super.send<string>(contract, 'transitionToNextState', 0);
     }
 
     async tokenBalance(): Promise<number> {
@@ -54,9 +54,9 @@ export class DistributorContractService extends BaseContractService {
       var contract = this.web3Service.getDistributorContract();
       return await super.call<number>(contract, 'tokenTotalSupply');
     }
+
     async subscribeProducer(): Promise<void> {
       var contract = this.web3Service.getDistributorContract();
-      var account = this.web3Service.getDefaultAccount();
-      return await super.send<void>(contract,'subscribeProducer',account);
+      return await super.send<void>(contract, 'subscribeAsProducer', 0);
     }
 }
