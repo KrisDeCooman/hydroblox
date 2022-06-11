@@ -25,7 +25,14 @@ When a consumption meter is assigned to a consumer (delivery address), the DID i
 Once the consumer has approved the consumption meter to spend ether on his behalf, consumption can start.
 
 As we want to avoid price fluctuations, as a result of speculators that want to exploit our system for their own benefits, we came up with the following.
-The consumption meter will automatically sell HBT tokens when it has too many, based on its past usage.
-On the other hand, the consumption meter will also automatically buy tokens when it has too little.
+
+When a consumption meter has an oversupply of HBT tokens, it will automatically offer a part of these tokens for sale.
+The amount of tokens that will be offered for sale, will be based on the current market demand (total water supply).
+But also on the consumer's past usage, so it would still have enough tokens to cover its own demand.
+On the other hand, the consumption meter will also automatically buy tokens when it is running out.
 The price of an HBT token will be determined based on an fixed algorithm, known in advance, that takes the current water supply into account.
 The less water supply there is, the higher the price of the HBT token will be.
+
+The mechanism described above can be compared with a liquidity pool.
+The consumers with an oversupply provide liquidity, making sure noone runs out of water.
+But this comes with a price: the price of the HBT token is based on a fixed algorithm, which increases the price when the total supply decreases.
