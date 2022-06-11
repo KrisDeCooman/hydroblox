@@ -1,17 +1,27 @@
 ## 08. Implementation details
 
-### Frontend
+### Development
 
-angular
-googled for the best frontend framework to be used, but concluded that all frameworks should be usable
+Development of HydroBlox was done using Remix and Visual Studio Code.
 
-features to improve usability:
-- loader when calling/sending to smart contract
-- snacks (error messages) with a usefull description in case errors occur
-- reload application when switching account (back to home) -> so you can test with multiple accoutns
-- reload application when switching network (back to home)
-- check whether network is rinkeby
-- reload current page when events from smart contract
+#### Frontend
+
+We tried to identity the best frontend framework to create our DApp in. But we came to the conclusion that there is no such framework and that most/all Javascript SPA framework can be used. We chose Angular since on of us already had some experience with it.
+
+We invested time to improve the usability in the frontend and lower the chance on errors:
+- Show loader when calling/sending to smart contract
+- Show snacks (error messages) with a usefull description in case errors occur
+- Reload the application when switching account (back to home), so you can test with multiple accounts
+- Reload the application when switching network (back to home), to make sure you are on the right network
+- Check whether the connected network is the one configured (Volta)
+- Reload the current page when events are triggered from the smart contracts
+
+### Deployment
+
+Deployment of the smart contracts can easily be done using Remix, following these steps:
+- Deploy the HydroBloxAuthority smart contract
+- Get the address of the HydroBloxConsumptionMeter and HydroBloxProductionMeter contracts (created by HydroBloxAuthority)
+- Deploy the HydroBloxDistributor smart contract, given the addresses of the HydroBloxConsumptionMeter and HydroBloxProductionMeter contracts
 
 ### Hosting
 
@@ -37,28 +47,3 @@ Our frontend is hosted on IPFS. To make our frontend compatible with IPFS, we ne
 - Build our frontend as follows: ng build --prod --aot
 
 This will deliver some artifacts in the dist folder, that can then be uploaded to IPFS.
-
-### Development
-
-Remix
-Visual Studio Code
-
-### Deployment
-
-Deployment of the smart contracts can easily be done using Remix, following these steps:
-- Deploy the HydroBloxAuthority smart contract
-- Get the address of the HydroBloxConsumptionMeter and HydroBloxProductionMeter contracts (created by HydroBloxAuthority)
-- Deploy the HydroBloxDistributor smart contract, given the addresses of the HydroBloxConsumptionMeter and HydroBloxProductionMeter contracts
-
-Cloudflare?
-
-updateable smart contracts?
-
-beschrijven: chip op de smart meters die de access tot de blockchain zullen doen (consume/produce)
-consumption meter: deze zullen automatisch hun tokens claimen wanneer deze beschikbaar zijn
--> zelfde voor production meter
-het zal ook de consumption meter zijn die tokens te koop zal aanbieden wanneer deze (te) veel tokens ter beschikking heeft
-het zal ook de consumption meter zijn die tokens zal aankopen wanneer deze te weinig heeft
-=> hebben de regels rond de prijszetting dan zelf in de hand
-
-wat met initiele PDF dat we gemaakt hebben? hierin verwerken of is dat reeds gebeurd?
