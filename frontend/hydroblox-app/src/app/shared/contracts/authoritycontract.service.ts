@@ -23,11 +23,11 @@ export class AuthorityContractService extends BaseContractService {
 
     async issueConsumptionMeter(address: string): Promise<void> {
       var contract = this.web3Service.getAuthorityContract();
-      return await super.send<void>(contract, 'issueConsumptionMeter', address);
+      return await super.send<void>(contract, 'issueConsumptionMeter', 0, address);
     }
 
     async issueProductionMeter(address: string): Promise<void> {
       var contract = this.web3Service.getAuthorityContract();
-      return await super.send<void>(contract, 'issueProductionMeter', address);
+      return await super.send<void>(contract, 'issueProductionMeter', 0, address);
     }
 }

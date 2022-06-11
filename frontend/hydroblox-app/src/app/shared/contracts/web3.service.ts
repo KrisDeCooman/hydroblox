@@ -18,6 +18,7 @@ export class Web3Service {
     private authority: Contract | undefined;
     private storage: Contract | undefined;
     private consumptionMeter: Contract | undefined;
+    private productionMeter: Contract | undefined;
 
     constructor(
         private zone: NgZone,
@@ -79,6 +80,10 @@ export class Web3Service {
     public getConsumptionMeterContract(): Contract {
       return this.consumptionMeter!;
     }
+  
+   public getProductionMeterContract(): Contract {
+        return this.productionMeter!;
+      }
 
     private async createWeb3() : Promise<boolean> {
         // see: https://docs.metamask.io/guide/ethereum-provider.html#using-the-provider
@@ -140,6 +145,7 @@ export class Web3Service {
         this.authority = new this.web3!.eth.Contract(Constants.AuthorityAbi, Constants.AuthorityAddress, { from: defaultAccount });
         this.storage = new this.web3!.eth.Contract(Constants.StorageAbi, Constants.StorageAddress, { from: defaultAccount });
         this.consumptionMeter = new this.web3!.eth.Contract(Constants.ConsumptionMeterAbi, Constants.consumptionMeterAddress, { from: defaultAccount });
+        this.productionMeter = new this.web3!.eth.Contract(Constants.ProductionMeterAbi, Constants.productionMeterAddress, { from: defaultAccount });
 
         this.reloadPageOnEvent(this.distributor, 'StateTransitioned');
         this.reloadPageOnEvent(this.distributor, 'TokensProduced');

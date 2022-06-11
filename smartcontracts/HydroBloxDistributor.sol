@@ -76,11 +76,11 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
         emit TokensConsumed(msg.sender, liters);
     }
 
-    function availableTokens() view external returns (uint) {
-        return token.balanceOf(msg.sender);
+    function tokenBalanceOf(address _address) view external returns (uint) {
+        return token.balanceOf(_address);
     }
 
-    function totalSupplyTokens() view external returns (uint) {
+    function tokenTotalSupply() view external returns (uint) {
         return token.totalSupply();
     }
 
