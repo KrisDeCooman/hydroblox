@@ -10,8 +10,9 @@ The HydroBlox tokens (HBT) represent drinking water that is available. The amoun
 
 ### The producer
 The producers have two types of sources they use to produce tap water: 
-drought sensitive sources of water like surface water reservoirs filled by rainfall via rivers and canals and groundwater in top layers
-non-drought sensitive sources of water like groundwater in deep layers and water coming from water rich regions- this amount is limited.
+- drought sensitive sources of water like surface water reservoirs filled by rainfall via rivers and canals and groundwater in top layers
+- non-drought sensitive sources of water like groundwater in deep layers and water coming from water rich regions- this amount is limited.
+
 On the production side tokens are created (minted) in line with water being buffered in drought sensitive sources combined with the production from non-drought sensitive sources. A producer doesn't have full control over the capacity he can produce. During dry periods the buffered amount is limited and sources can get depleted and supply can become significantly reduced. It has to be kept in mind that even during periods of drought the non-drought sensitive sources are still available. This guarantees always a minimum amount of drinking water for each consumer although this amount will be below comfort levels for most households. 
 The producers are paid a fixed amount (in a digital currency) which should cover the costs of running their operation and a reasonable profit.
 
