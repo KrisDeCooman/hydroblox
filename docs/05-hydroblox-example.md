@@ -1,4 +1,4 @@
-## 04. HydroBlox Example
+## 05. HydroBlox Example
 
 Below we give an example of a typical customer journey who wants to participate in the Hydroblox blockchain.  A future customer, named "Jenny" should first get a  HydroBloxConsumptionMeter (HBCM). With this meter, she can consume water and every time water is used the HBCM will burn the same amount of HBT. 
 
