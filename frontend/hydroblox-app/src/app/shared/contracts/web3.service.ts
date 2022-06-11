@@ -9,19 +9,21 @@ import { Router } from '@angular/router';
 declare const window: any;
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class Web3Service {
 
     private web3: Web3 | undefined;
-    private distributor : Contract | undefined;
+    private distributor: Contract | undefined;
     private authority: Contract | undefined;
     private storage: Contract | undefined;
     private consumptionMeter: Contract | undefined;
+    private productionMeter: Contract | undefined;
+    private hydroBloxToken: Contract | undefined;
 
     constructor(
         private zone: NgZone,
-        private router: Router, 
+        private router: Router,
         private errorSnackService: ErrorSnackService) {
 
         // reload page when routed to same page
@@ -39,14 +41,14 @@ export class Web3Service {
         }
     }
 
-    public isConnected() : boolean {
+    public isConnected(): boolean {
         return this.web3 != undefined;
     }
 
     public async connect(): Promise<boolean> {
 
         if (this.web3) {
-            this.web3.eth.clearSubscriptions((error: any, result: any) => {});
+            this.web3.eth.clearSubscriptions((error: any, result: any) => { });
             this.web3 = undefined;
         }
 
@@ -73,14 +75,22 @@ export class Web3Service {
     }
 
     public getStorageContract(): Contract {
-      return this.storage!;
+        return this.storage!;
     }
 
     public getConsumptionMeterContract(): Contract {
-      return this.consumptionMeter!;
+        return this.consumptionMeter!;
     }
 
-    private async createWeb3() : Promise<boolean> {
+    public getProductionMeterContract(): Contract {
+        return this.productionMeter!;
+    }
+
+    public getHydroBloxTokenContract(): Contract {
+        return this.hydroBloxToken!;
+    }
+
+    private async createWeb3(): Promise<boolean> {
         // see: https://docs.metamask.io/guide/ethereum-provider.html#using-the-provider
 
         const provider = await detectEthereumProvider();
@@ -126,7 +136,7 @@ export class Web3Service {
         }
 
         console.log('Connected to Metamask!');
-        
+
         this.web3 = new Web3(window.ethereum);
         this.web3.defaultAccount = accounts[0];
 
@@ -134,12 +144,14 @@ export class Web3Service {
     }
 
     private createContracts() {
-        let defaultAccount : string = this.web3!.defaultAccount!;
+        let defaultAccount: string = this.web3!.defaultAccount!;
 
         this.distributor = new this.web3!.eth.Contract(Constants.DistributorAbi, Constants.DistributorAddress, { from: defaultAccount });
         this.authority = new this.web3!.eth.Contract(Constants.AuthorityAbi, Constants.AuthorityAddress, { from: defaultAccount });
         this.storage = new this.web3!.eth.Contract(Constants.StorageAbi, Constants.StorageAddress, { from: defaultAccount });
         this.consumptionMeter = new this.web3!.eth.Contract(Constants.ConsumptionMeterAbi, Constants.consumptionMeterAddress, { from: defaultAccount });
+        this.productionMeter = new this.web3!.eth.Contract(Constants.ProductionMeterAbi, Constants.productionMeterAddress, { from: defaultAccount });
+        this.hydroBloxToken = new this.web3!.eth.Contract(Constants.TokenAbi, Constants.hydroBloxTokenAddress, { from: defaultAccount });
 
         this.reloadPageOnEvent(this.distributor, 'StateTransitioned');
         this.reloadPageOnEvent(this.distributor, 'TokensProduced');

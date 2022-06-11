@@ -11,9 +11,15 @@
     </mat-grid-tile>
     <mat-grid-tile>
         <span>HBT balance : {{ tokenBalance }}</span>
+        <span>
+            <button mat-raised-button color=primary [disabled]="!tokensAvailableToClaim"
+                (click)="claimTokensAsConsumer()">
+                <span>Claim Tokens</span>
+            </button>
+        </span>
     </mat-grid-tile>
     <mat-grid-tile>
-        <button mat-raised-button color=primary [disabled]="isSubscribedConsumer" (click)="subscribe()">
+        <button mat-raised-button color=primary [disabled]="isSubscribedConsumer" (click)="subscribeAsConsumer()">
             <span>Subscribe</span>
         </button>
     </mat-grid-tile>
@@ -22,5 +28,5 @@
             <span>Consume Water</span>
         </button>
     </mat-grid-tile>
-    <mat-grid-tile rowspan="3"></mat-grid-tile>
+    <mat-grid-tile rowspan="1"></mat-grid-tile>
 </mat-grid-list>
