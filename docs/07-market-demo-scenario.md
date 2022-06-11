@@ -1,1 +1,0 @@
-## 07. Market demo scenario

@@ -1,4 +1,4 @@
-## 03. Smart contracts
+## 04. Smart contracts
 
 The following smart contracts are part of the HydroBlox project. These contracts were written in Solidity.
 
