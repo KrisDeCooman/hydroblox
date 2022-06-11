@@ -43,7 +43,7 @@ Blocks and transaction can be explored using the Volta explorer: https://volta-e
 #### Frontend
 
 Our frontend is hosted on IPFS. To make our frontend compatible with IPFS, we needed to do two steps:
-- Change <base href> tag
-- Build our frontend as follows: ng build --prod --aot
+- Change `<base href>` tag
+- Build our frontend as follows: `ng build --prod --aot`
 
 This will deliver some artifacts in the dist folder, that can then be uploaded to IPFS.
