@@ -25,4 +25,6 @@ export class DistributorComponent implements OnInit {
   async onTransitionClicked() {
     await this.distributorContractService.transitionToNextState();
   }
+
+
 }

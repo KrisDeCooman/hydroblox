@@ -7,7 +7,8 @@ import { Web3Service } from './web3.service';
 @Injectable({
     providedIn: 'root'
 })
-export class ConsumptionMeterContractService extends BaseContractService {
+export class HydroBloxTokenContractService extends BaseContractService {
+
 
     constructor(
         private web3Service: Web3Service,
@@ -16,16 +17,12 @@ export class ConsumptionMeterContractService extends BaseContractService {
         super(loadService, snackService);
     }
 
-    async isConsumptionMeter(): Promise<boolean> {
-
-        var contract = this.web3Service.getConsumptionMeterContract();
+    async tokenBalance(): Promise<number> {
+        var contract = this.web3Service.getHydroBloxTokenContract();
         var account = this.web3Service.getDefaultAccount();
         var balance = await super.call<number>(contract, 'balanceOf', account);
-
-        if (balance > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return balance;
     }
+
+
 }

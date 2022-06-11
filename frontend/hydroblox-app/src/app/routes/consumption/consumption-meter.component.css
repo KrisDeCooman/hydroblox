@@ -1,3 +1,12 @@
 mat-grid-list {
     height: calc(100% - 75px);
 }
+
+mat-form-field {
+    width: 300px;
+}
+
+button {
+    margin-left: 20px;
+    margin-bottom: 15px
+}
