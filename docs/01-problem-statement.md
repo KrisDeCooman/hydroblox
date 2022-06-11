@@ -10,4 +10,4 @@ In general, we see 3 problems with the current water managment policy:
      
 3. Although more and more news articles are published, the problem is still under recognized as the problem is only becoming worse instead of better.
 
-We have come up with Hydroblox, which is a blockchain based solution which should tackle the above problems in a cost-effective decentralized scalable way by using blockchain technology.
+We have come up with Hydroblox, a blockchain based solution, which should tackle the above problems in a cost-effective decentralized scalable way.
