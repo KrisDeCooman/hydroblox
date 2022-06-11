@@ -24,8 +24,7 @@ Each water meter has a distributed identity (DID) to identity itself as a certif
 When a consumption meter is assigned to a consumer (delivery address), the DID is updated so it reflects the number of people living there.
 Once the consumer has approved the consumption meter to spend ether on his behalf, consumption can start.
 
-As we want to avoid price fluctuations, as a result of speculators that want to exploit our system for their own benefits, we came up with the following.
-
+As we want to avoid price fluctuations, as a result of speculators that want to exploit our system for their own benefits, we came up with the following coutermeasure.
 When a consumption meter has an oversupply of HBT tokens, it will automatically offer a part of these tokens for sale.
 The amount of tokens that will be offered for sale, will be based on the current market demand (total water supply).
 But also on the consumer's past usage, so it would still have enough tokens to cover its own demand.
