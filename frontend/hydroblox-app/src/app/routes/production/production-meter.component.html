@@ -7,8 +7,21 @@
         <span>Current state: {{ currentState }}</span>
     </mat-grid-tile>
     <mat-grid-tile>
+      <span>Subscribed: {{ isSubscribedProducer }}</span>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-raised-button color=primary [disabled]="isNotsubscribedProducer" (click)="producewater (10)">">
+      <span> Producewater</span>
+    </button>
+  </mat-grid-tile>
+    <mat-grid-tile>
         <button mat-raised-button color=primary [disabled]="isSubscribedProducer" (click)="subscribe()">
           <span>enroll as producer</span>
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-raised-button color=primary [disabled]="isNotsubscribedProducer"  (click)="claimProducer()">
+          <span>ClaimVolta</span>
         </button>
       </mat-grid-tile>
       <mat-grid-tile>
