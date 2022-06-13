@@ -1,9 +1,9 @@
 mat-toolbar {
-    height: 70px;
+  height: 70px;
 }
 
 mat-toolbar-row {
-    padding-right: 0px;
+  padding-right: 0px;
 }
 
 .logotext {

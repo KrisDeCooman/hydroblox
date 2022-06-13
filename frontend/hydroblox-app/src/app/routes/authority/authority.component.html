@@ -1,29 +1,31 @@
 <mat-grid-list cols="1" rowHeight="fit">
-    <mat-grid-tile rowspan="1"></mat-grid-tile>
-    <mat-grid-tile>
-      <h1>You are logged in as HydroBlox authority</h1>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field appearance="fill">
-        <mat-label>Address</mat-label>
-        <input matInput #consumptionMeterAddress maxlength="42">
-        <mat-hint align="start"><strong>Enter the consumption meter address here</strong> </mat-hint>
-        <mat-hint align="end">{{consumptionMeterAddress.value.length}} / 42</mat-hint>
-      </mat-form-field>
-      <button mat-raised-button color=primary [disabled]="consumptionMeterAddress.value.length != 42" (click)="onIssueConsumptionMeterTokenClicked(consumptionMeterAddress.value)">
-        <span>Issue consumption meter token</span>
-      </button>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field appearance="fill">
-        <mat-label>Address</mat-label>
-        <input matInput #productionMeterAddress maxlength="42">
-        <mat-hint align="start"><strong>Enter the production meter address here</strong> </mat-hint>
-        <mat-hint align="end">{{productionMeterAddress.value.length}} / 42</mat-hint>
-      </mat-form-field>
-      <button mat-raised-button color=primary [disabled]="productionMeterAddress.value.length != 42" (click)="onIssueProductionMeterTokenClicked(productionMeterAddress.value)">
-        <span>Issue production meter token</span>
-      </button>
-    </mat-grid-tile>
-    <mat-grid-tile rowspan="3"></mat-grid-tile>
+  <mat-grid-tile rowspan="1"></mat-grid-tile>
+  <mat-grid-tile>
+    <h1>You are logged in as HydroBlox authority</h1>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput #consumptionMeterAddress maxlength="42">
+      <mat-hint align="start"><strong>Enter the consumption meter address here</strong> </mat-hint>
+      <mat-hint align="end">{{consumptionMeterAddress.value.length}} / 42</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button color=primary [disabled]="consumptionMeterAddress.value.length != 42"
+      (click)="onIssueConsumptionMeterTokenClicked(consumptionMeterAddress.value)">
+      <span>Issue consumption meter token</span>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput #productionMeterAddress maxlength="42">
+      <mat-hint align="start"><strong>Enter the production meter address here</strong> </mat-hint>
+      <mat-hint align="end">{{productionMeterAddress.value.length}} / 42</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button color=primary [disabled]="productionMeterAddress.value.length != 42"
+      (click)="onIssueProductionMeterTokenClicked(productionMeterAddress.value)">
+      <span>Issue production meter token</span>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="3"></mat-grid-tile>
 </mat-grid-list>

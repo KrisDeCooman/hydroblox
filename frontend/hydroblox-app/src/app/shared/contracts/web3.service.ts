@@ -80,12 +80,12 @@ export class Web3Service {
     public getConsumptionMeterContract(): Contract {
         return this.consumptionMeter!;
     }
-  
-   public getProductionMeterContract(): Contract {
-        return this.productionMeter!;
-      }
 
-    private async createWeb3() : Promise<boolean> {
+    public getProductionMeterContract(): Contract {
+        return this.productionMeter!;
+    }
+
+    private async createWeb3(): Promise<boolean> {
         // see: https://docs.metamask.io/guide/ethereum-provider.html#using-the-provider
 
         const provider = await detectEthereumProvider();

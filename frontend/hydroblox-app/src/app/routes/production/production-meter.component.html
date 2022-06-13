@@ -1,17 +1,17 @@
 <mat-grid-list cols="1" rowHeight="fit">
-    <mat-grid-tile rowspan="1"></mat-grid-tile>
-    <mat-grid-tile>
-      <h1>You are logged in as HydroBlox distributor</h1>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <span>Current state: {{ currentState }}</span>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <button mat-raised-button color=primary [disabled]="isSubscribedProducer" (click)="subscribe()">
-          <span>enroll as producer</span>
-        </button>
-      </mat-grid-tile>
-      <mat-grid-tile>
-      </mat-grid-tile>
-    <mat-grid-tile rowspan="3"></mat-grid-tile>
-  </mat-grid-list>
+  <mat-grid-tile rowspan="1"></mat-grid-tile>
+  <mat-grid-tile>
+    <h1>You are logged in as HydroBlox distributor</h1>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <span>Current state: {{ currentState }}</span>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-raised-button color=primary [disabled]="isSubscribedProducer" (click)="subscribe()">
+      <span>enroll as producer</span>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="3"></mat-grid-tile>
+</mat-grid-list>

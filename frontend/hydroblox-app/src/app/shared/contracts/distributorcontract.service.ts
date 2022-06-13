@@ -39,10 +39,10 @@ export class DistributorContractService extends BaseContractService {
     }
   }
 
-    async transitionToNextState(): Promise<void> {
-      var contract = this.web3Service.getDistributorContract();
-      await super.send<string>(contract, 'transitionToNextState', 0);
-    }
+  async transitionToNextState(): Promise<void> {
+    var contract = this.web3Service.getDistributorContract();
+    await super.send<string>(contract, 'transitionToNextState', 0);
+  }
 
   async tokenBalance(): Promise<number> {
     var contract = this.web3Service.getDistributorContract();
@@ -53,21 +53,20 @@ export class DistributorContractService extends BaseContractService {
   async tokenTotalSupply(): Promise<number> {
     var contract = this.web3Service.getDistributorContract();
     return await super.call<number>(contract, 'tokenTotalSupply');
-   }
+  }
 
-  async subscribeAsConsumer(): Promise<boolean> {
+  async subscribeAsConsumer(): Promise<void> {
     var contract = this.web3Service.getDistributorContract();
-    //return await super.send<boolean>(contract, 'subscribeAsConsumer');
-    return await contract.methods['subscribeAsConsumer']().send({ value: 1000000000 });
+    await super.send<void>(contract, 'subscribeAsConsumer', 1000000000);
   }
 
   async claimTokensAsConsumer(): Promise<void> {
     var contract = this.web3Service.getDistributorContract();
-    await super.send<string>(contract, 'claimTokensAsConsumer');
+    await super.send<void>(contract, 'claimTokensAsConsumer', 0);
   }
-    
-    async subscribeProducer(): Promise<void> {
-      var contract = this.web3Service.getDistributorContract();
-      return await super.send<void>(contract, 'subscribeAsProducer', 0);
-    }
+
+  async subscribeProducer(): Promise<void> {
+    var contract = this.web3Service.getDistributorContract();
+    return await super.send<void>(contract, 'subscribeAsProducer', 0);
+  }
 }

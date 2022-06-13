@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ConsumptionMeterContractService } from 'src/app/shared/contracts/consumptionmetercontract.service';
 import { DistributorContractService } from 'src/app/shared/contracts/distributorcontract.service';
 import { StorageContractService } from 'src/app/shared/contracts/storagecontract.service';
-import { HydroBloxTokenContractService } from 'src/app/shared/contracts/hydrobloxtokencontract.service';
 
 @Component({
     templateUrl: './consumption-meter.component.html',
@@ -22,13 +21,12 @@ export class ConsumptionMeterComponent implements OnInit {
     constructor(
         private distributorContractService: DistributorContractService,
         private consumptionMeterContractService: ConsumptionMeterContractService,
-        private hydrobloxtokenContractService: HydroBloxTokenContractService,
         private storageContractService: StorageContractService) { }
 
 
     async ngOnInit(): Promise<void> {
         this.currentState = await this.distributorContractService.currentState();
-        this.tokenBalance = await this.hydrobloxtokenContractService.tokenBalance();
+        this.tokenBalance = await this.distributorContractService.tokenBalance();
         this.isSubscribedConsumer = await this.storageContractService.isSubscribedConsumer();
 
         if (await this.distributorContractService.tokenTotalSupply() > 0) {
@@ -37,15 +35,15 @@ export class ConsumptionMeterComponent implements OnInit {
 
     }
 
-    async consumeTokens() {
+    async consumeTokens(): Promise<void> {
 
     }
 
-    async subscribeAsConsumer(): Promise<boolean> {
+    async subscribeAsConsumer(): Promise<void> {
         return this.distributorContractService.subscribeAsConsumer();
     }
 
-    async claimTokensAsConsumer() {
+    async claimTokensAsConsumer(): Promise<void> {
         return this.distributorContractService.claimTokensAsConsumer();
     }
 }
