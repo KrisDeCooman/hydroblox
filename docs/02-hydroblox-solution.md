@@ -1,7 +1,7 @@
 ## 02. HydroBlox Solution
 
 HydroBlox offers a solution to control the drinkwater usage and incentivizes users to be frugal, especially during periods of droughts.
-Small consumers will be rewarded, large consumers will be confrontend with larger fees.
+Small consumers will be rewarded, large consumers will be confronted with larger fees.
 HydroBlox tokens (HBT) will be used to create the right economic environment.
 
 The amount of HydroBlox tokens will always represent the amount of available drinkable water.
@@ -27,7 +27,7 @@ Once the consumer has approved the consumption meter to spend ether on his behal
 As we want to avoid price fluctuations, as a result of speculators that want to exploit our system for their own benefits, we came up with the following coutermeasure.
 When a consumption meter has an oversupply of HBT tokens, it will automatically offer a part of these tokens for sale.
 The amount of tokens that will be offered for sale, will be based on the current market demand (total water supply).
-But also on the consumer's past usage, so it would still have enough tokens to cover its own demand.
+The calculation will also take into account the consumer's past usage, so it would still have enough tokens to cover it's own demand.
 On the other hand, the consumption meter will also automatically buy tokens when it is running out.
 The price of an HBT token will be determined based on an fixed algorithm, known in advance, that takes the current water supply into account.
 The less water supply there is, the higher the price of the HBT token will be.
