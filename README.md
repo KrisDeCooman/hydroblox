@@ -2,6 +2,8 @@
 
 The HydroBlox project was developed as part of the Blockchain@Home education at Howest.
 
+The hosted version can be found here: https://ipfs.infura.io/ipfs/QmZtCFNxbDvh1FwGMsTck3CbvtD8VoCULX1DgpSjew3dPT
+
 ## Table of content
 - [01. Problem statement](docs/01-problem-statement.md)
 - [02. HydroBlox solution](docs/02-hydroblox-solution.md)

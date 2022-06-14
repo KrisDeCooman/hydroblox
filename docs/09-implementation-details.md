@@ -40,8 +40,6 @@ Volta tokens can be received from the faucet: https://voltafaucet.energyweb.org/
 
 #### Frontend
 
-Our frontend is hosted on IPFS. To make our frontend compatible with IPFS, we needed to do two steps:
-- Change `<base href>` tag
-- Build our frontend as follows: `ng build --prod --aot`
-
-This will deliver some artifacts in the dist folder, that can then be uploaded to IPFS.
+Our frontend is hosted on IPFS. To make our frontend available on IPFS, we need to do the following steps:
+- Build our frontend as follows: `ng build --prod --aot` This will deliver some artifacts in the dist folder.
+- These artifacts need to be uploaded to IPFS. This can be done either via IPFS desktop, or via a pinning service such as Filebase (which offers the first 5 GB for free).
