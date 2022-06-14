@@ -24,7 +24,13 @@
         </button>
     </mat-grid-tile>
     <mat-grid-tile>
-        <button mat-raised-button color=primary [disabled]="!hasTokens" (click)="consumeTokens()">
+        <mat-form-field appearance="fill">
+            <mat-label>HBT :</mat-label>
+            <input matInput #tokenAmount maxlength="5">
+            <mat-hint align="start"><strong>Enter the amount of HBT</strong> </mat-hint>
+            <mat-hint align="end"></mat-hint>
+        </mat-form-field>
+        <button mat-raised-button color=primary [disabled]="!hasTokens" (click)="consumeTokens(tokenAmount.value)">
             <span>Consume Water</span>
         </button>
     </mat-grid-tile>
