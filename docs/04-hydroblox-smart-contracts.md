@@ -1,4 +1,4 @@
-## 03. Smart contracts
+## 04. Smart contracts
 
 The following smart contracts are part of the HydroBlox project. These contracts were written in Solidity.
 
@@ -23,7 +23,7 @@ The HydroBloxDistributor smart contract uses the HydroBloxStorage contract to ke
 
 The HydroBloxDistributor smart contract implements the HydroBloxStateMachine contract, which is a representation of a subscription state machine.
 The state machine can be in states:
-- Enrollment: during this state, consumers and producers can enroll (subscribe) for the upcoming subscription run
+- Enrollment: during this state, consumers and producers can subscribe for the upcoming subscription run
 - Running: during this state, producers can produce water and consumers can claim HBT tokens
 - Finished: during this state, producers can claim their earned ether and consumers can claim HBT tokens
 
@@ -33,9 +33,10 @@ Having a fixed set of consumers and producers enables us to evenly divide the et
 We chose to transition from one state to the next one manually, by calling a function on the smart contract.
 We do this for testing purposes. In reality, we would implement the transitions to happen automatically tiggered by time (using the block number).
 
-TODO: fix naming in image
+![image](https://user-images.githubusercontent.com/25088136/173257220-3be624fd-dce4-4783-b24c-0e1f9c184c48.png)
 
-![image](https://user-images.githubusercontent.com/25088136/169668849-38bf3047-15a2-4592-a834-d17211a8f575.png)
+
+
 
 ### HydroBloxConsumptionMeter
 

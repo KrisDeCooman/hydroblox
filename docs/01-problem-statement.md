@@ -4,11 +4,10 @@ Due to climate change, we are experiencing more droughts, which are having an im
 
 In general, we see 3 problems with the current water managment policy:
 
-  1. Current measurements taken are all centralized and focused on prohibitions, which are difficult to enforce in practice
+1. Current measurements taken are all centralized and focused on prohibitions, which are difficult to enforce in practice.
 
-  2. People are not incentivized to be more frugal with water, especially during droughts, as the price is always stable with no penalty for
-     irresponsible consumers. While people who take the water shortages seriously by changing their way of consumption are not rewarded.
+2. People are not incentivized to be more frugal with water, especially during droughts, as the price is always stable with no penalty for irresponsible consumers. While people who take the water shortages seriously by changing their way of consumption are not rewarded.
      
-  3. Although more and more news articles are published, the problem is still under recognized as the problem is only becoming worse instead of better.
+3. Although more and more news articles are published, the problem is still under recognized as the problem is only becoming worse instead of better.
 
-We have come up with Hydroblox, which is a blockchain based solution which should tackle the above problems in a cost-effective decentralized scalable way by using blockchain technology.
+We have come up with Hydroblox, a blockchain based solution, which should tackle the above problems in a cost-effective decentralized scalable way.
