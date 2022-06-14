@@ -47,6 +47,7 @@ export class Web3Service {
     public async connect(): Promise<boolean> {
 
         if (this.web3) {
+            // this doesn't do the trick. needs a fix
             this.web3.eth.clearSubscriptions((error: any, result: any) => { });
             this.web3 = undefined;
         }
