@@ -4,12 +4,14 @@
     <h1>You are logged in into the HydroBlox Simulator</h1>
   </mat-grid-tile>
   <mat-grid-tile>
-    <button mat-raised-button color=primary [disabled]="!isConsumptionMeter" (click)="onContinueAsConsumptionMeterClicked()">
+    <button mat-raised-button color=primary [disabled]="!isConsumptionMeter"
+      (click)="onContinueAsConsumptionMeterClicked()">
       <span>Continue as consumption meter</span>
     </button>
   </mat-grid-tile>
   <mat-grid-tile>
-    <button mat-raised-button color=primary [disabled]="!isProductionMeter" (click)="onContinueAsProductionMeterClicked()">
+    <button mat-raised-button color=primary [disabled]="!isProductionMeter"
+      (click)="onContinueAsProductionMeterClicked()">
       <span>Continue as production meter</span>
     </button>
   </mat-grid-tile>

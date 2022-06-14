@@ -4,12 +4,12 @@ import { Web3Service } from "../contracts/web3.service";
 
 @Injectable({
     providedIn: 'root'
-  })
-  export class ConnectedGuard implements CanActivate {
+})
+export class ConnectedGuard implements CanActivate {
     constructor(
         private web3Service: Web3Service,
-        private router: Router) {}
-  
+        private router: Router) { }
+
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this.web3Service.isConnected()) {
             return true;

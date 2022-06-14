@@ -13,7 +13,7 @@ export class ConsumptionMeterContractService extends BaseContractService {
         private web3Service: Web3Service,
         loadService: LoaderService,
         snackService: ErrorSnackService) {
-            super(loadService, snackService);
+        super(loadService, snackService);
     }
 
     async isConsumptionMeter(): Promise<boolean> {
