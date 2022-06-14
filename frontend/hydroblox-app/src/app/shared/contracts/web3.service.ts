@@ -147,17 +147,22 @@ export class Web3Service {
         this.consumptionMeter = new this.web3!.eth.Contract(Constants.ConsumptionMeterAbi, Constants.consumptionMeterAddress, { from: defaultAccount });
         this.productionMeter = new this.web3!.eth.Contract(Constants.ProductionMeterAbi, Constants.productionMeterAddress, { from: defaultAccount });
 
-        this.reloadPageOnEvent(this.distributor, 'StateTransitioned');
-        this.reloadPageOnEvent(this.distributor, 'TokensProduced'); // if current page is consumer
-        //this.reloadPageOnEvent(this.distributor, 'TokensConsumed'); // remove this?
-    }
+        var reloadConfiguration: any = {};
+        reloadConfiguration['StateTransitioned'] = ['/distributor', '/consumption-meter', '/production-meter'];
+        reloadConfiguration['ConsumerSubscribed'] = ['/distributor'];
+        reloadConfiguration['ProducerSubscribed'] = ['/distributor'];
+        reloadConfiguration['TokensProduced'] = ['/distributor'];
+        reloadConfiguration['TokensConsumed'] = ['/distributor'];
 
-    private reloadPageOnEvent(contract: Contract, event: string) {
-        contract.events[event]({}, (error: string, data: any) => {
+        this.distributor.events.allEvents({}, (error: string, data: any) => {
             if (!error) {
-                console.log('Reloading current page due to event: ' + event);
-                var currentUrl = this.router.url;
-                this.zone.run(() => this.router.navigate([currentUrl]));
+                if (reloadConfiguration.hasOwnProperty(data.event)) {
+                    var currentUrl = this.router.url;
+                    if (reloadConfiguration[data.event].includes(currentUrl)) {
+                        console.log('Reloading current page due to event: ' + data.event);
+                        this.zone.run(() => this.router.navigate([currentUrl]));
+                    }
+                }
             }
         });
     }
