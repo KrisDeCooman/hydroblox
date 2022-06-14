@@ -8,7 +8,6 @@ export class Constants {
 	static readonly StorageAddress = "0x484a0056ce33C28516727843C421F4adBb73Dd5a";
 	static readonly consumptionMeterAddress = "0x52744937EE4E9FC1941af2F848C03D3acb08cB91";
 	static readonly productionMeterAddress = "0x24b120003afCEbFC07086296280a69B9a8a6845E";
-	static readonly hydroBloxTokenAddress = "0x0f2f462BD43E4C262DC927C5154a914BBBec821A";
 
 	static readonly DistributorAbi: AbiItem[] = [
 		{
