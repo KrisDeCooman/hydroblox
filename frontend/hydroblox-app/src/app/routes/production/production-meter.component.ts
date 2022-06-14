@@ -31,8 +31,8 @@ export class ProductionMeterComponent implements OnInit {
     await this.ngOnInit();
   }
 
-  async producewater(productionWater: number): Promise<void> {
-    await this.distributorContractService.produce(productionWater);
+  async produceTokens(amountOfHBT: string): Promise<void> {
+    await this.distributorContractService.produce(parseInt(amountOfHBT));
   }
 
   async claimProducer(): Promise<void> {
