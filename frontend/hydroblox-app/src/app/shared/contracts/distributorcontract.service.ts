@@ -65,4 +65,10 @@ export class DistributorContractService extends BaseContractService {
     var contract = this.web3Service.getDistributorContract();
     await super.send<string>(contract, 'claimTokensAsConsumer');
   }
+
+  async consume(amountOfHBT: number) {
+    var contract = this.web3Service.getDistributorContract();
+    await super.send<string>(contract, 'consume', amountOfHBT);
+  }
+
 }

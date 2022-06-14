@@ -11,7 +11,9 @@ import { MatInputModule } from '@angular/material/input'
     ],
     imports: [
         CommonModule,
-        SharedModule
+        SharedModule,
+        MatFormFieldModule,
+        MatInputModule
     ]
 })
 export class ConsumptionMeterModule { }

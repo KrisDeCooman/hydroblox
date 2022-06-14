@@ -31,14 +31,18 @@ export class ConsumptionMeterComponent implements OnInit {
         this.tokenBalance = await this.hydrobloxtokenContractService.tokenBalance();
         this.isSubscribedConsumer = await this.storageContractService.isSubscribedConsumer();
 
-        if (await this.distributorContractService.tokenTotalSupply() > 0) {
+        if (await this.distributorContractService.tokenTotalSupply() > 0 && this.currentState === 'Running') {
             this.tokensAvailableToClaim = true;
+        }
+
+        if (this.tokenBalance > 0) {
+            this.hasTokens = true;
         }
 
     }
 
-    async consumeTokens() {
-
+    async consumeTokens(amountOfHBT: string) {
+        return this.distributorContractService.consume(parseInt(amountOfHBT));
     }
 
     async subscribeAsConsumer(): Promise<boolean> {
