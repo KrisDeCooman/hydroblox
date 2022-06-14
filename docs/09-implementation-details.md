@@ -38,8 +38,6 @@ To connect your MetaMask to the Volta testnet, you need to add a new network wit
 
 Volta tokens can be received from the faucet: https://voltafaucet.energyweb.org/.
 
-Blocks and transaction can be explored using the Volta explorer: https://volta-explorer.energyweb.org/.
-
 #### Frontend
 
 Our frontend is hosted on IPFS. To make our frontend compatible with IPFS, we needed to do two steps:
