@@ -70,14 +70,14 @@ export class DistributorContractService extends BaseContractService {
     return await super.send<void>(contract, 'subscribeAsProducer', 0);
   }
 
-  async consume(amountOfHBT: number) {
+  async consume(amount: number) {
     var contract = this.web3Service.getDistributorContract();
-    await super.send<string>(contract, 'consume', 0, amountOfHBT);
+    await super.send<string>(contract, 'consume', 0, amount);
   }
 
-  async produce(productionWater: number): Promise<number> {
+  async produce(amount: number): Promise<number> {
     var contract = this.web3Service.getDistributorContract();
-    return await super.send<number>(contract, 'produce', 0, productionWater);
+    return await super.send<number>(contract, 'produce', 0, amount);
   }
 
   async claimTokensAsProducer(): Promise<void> {

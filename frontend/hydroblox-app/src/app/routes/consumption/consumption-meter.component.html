@@ -1,37 +1,36 @@
 <mat-grid-list cols="1" rowHeight="fit">
     <mat-grid-tile rowspan="1"></mat-grid-tile>
     <mat-grid-tile>
-        <h1>You are logged in as HydroBlox consumption</h1>
+        <h1>You are logged in as a HydroBlox consumption meter</h1>
     </mat-grid-tile>
     <mat-grid-tile>
-        <span>Current state: {{ currentState }}</span>
+        <span>Current subscription run state: {{ currentState }}</span>
     </mat-grid-tile>
     <mat-grid-tile>
         <span>Subscribed: {{ isSubscribedConsumer }}</span>
     </mat-grid-tile>
     <mat-grid-tile>
-        <span>HBT balance : {{ tokenBalance }}</span>
-        <span>
-            <button mat-raised-button color=primary [disabled]="!tokensAvailableToClaim"
-                (click)="claimTokensAsConsumer()">
-                <span>Claim Tokens</span>
-            </button>
-        </span>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <button mat-raised-button color=primary [disabled]="isSubscribedConsumer" (click)="subscribeAsConsumer()">
+        <button mat-raised-button color=primary [disabled]="!canSubscribe" (click)="subscribeAsConsumer()">
             <span>Subscribe</span>
         </button>
     </mat-grid-tile>
     <mat-grid-tile>
+        <span>HBT balance / Your water supply in liters: {{ tokenBalance }}</span>
+        <span>
+            <button mat-raised-button color=primary [disabled]="!canClaim" (click)="claimTokensAsConsumer()">
+                <span>Claim tokens</span>
+            </button>
+        </span>
+    </mat-grid-tile>
+    <mat-grid-tile>
         <mat-form-field appearance="fill">
-            <mat-label>HBT :</mat-label>
+            <mat-label>Liters of water</mat-label>
             <input matInput #tokenAmount maxlength="5">
             <mat-hint align="start"><strong>Enter the amount of HBT</strong> </mat-hint>
             <mat-hint align="end"></mat-hint>
         </mat-form-field>
-        <button mat-raised-button color=primary [disabled]="!hasTokens" (click)="consumeTokens(tokenAmount.value)">
-            <span>Consume Water</span>
+        <button mat-raised-button color=primary [disabled]="!canConsume" (click)="consumeTokens(tokenAmount.value)">
+            <span>Consume water</span>
         </button>
     </mat-grid-tile>
     <mat-grid-tile rowspan="1"></mat-grid-tile>

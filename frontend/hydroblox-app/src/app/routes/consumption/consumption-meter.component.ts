@@ -1,5 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ConsumptionMeterContractService } from 'src/app/shared/contracts/consumptionmetercontract.service';
+import { Component, OnInit } from '@angular/core';
 import { DistributorContractService } from 'src/app/shared/contracts/distributorcontract.service';
 import { StorageContractService } from 'src/app/shared/contracts/storagecontract.service';
 
@@ -7,47 +6,41 @@ import { StorageContractService } from 'src/app/shared/contracts/storagecontract
     templateUrl: './consumption-meter.component.html',
     styleUrls: ['./consumption-meter.component.css']
 })
-
 export class ConsumptionMeterComponent implements OnInit {
 
-    hasTokens: boolean = false;
-    tokensAvailableToClaim: boolean = false;
     tokenBalance: number = 0;
     isSubscribedConsumer: boolean = false;
-
-
     currentState: string = '';
+    canConsume: boolean = false;
+    canSubscribe: boolean = false;
+    canClaim: boolean = false;
 
     constructor(
         private distributorContractService: DistributorContractService,
-        private consumptionMeterContractService: ConsumptionMeterContractService,
         private storageContractService: StorageContractService) { }
-
 
     async ngOnInit(): Promise<void> {
         this.currentState = await this.distributorContractService.currentState();
         this.tokenBalance = await this.distributorContractService.tokenBalance();
         this.isSubscribedConsumer = await this.storageContractService.isSubscribedConsumer();
 
-        if (await this.distributorContractService.tokenTotalSupply() > 0 && this.currentState === 'Running') {
-            this.tokensAvailableToClaim = true;
-        }
-
-        if (this.tokenBalance > 0) {
-            this.hasTokens = true;
-        }
-
+        this.canConsume = this.tokenBalance > 0;
+        this.canSubscribe = this.currentState === 'Enrollment' && !this.isSubscribedConsumer;
+        this.canClaim = this.currentState !== 'Enrollment' && this.isSubscribedConsumer;
     }
 
     async consumeTokens(amountOfHBT: string): Promise<void> {
-        return this.distributorContractService.consume(parseInt(amountOfHBT));
+        await this.distributorContractService.consume(parseInt(amountOfHBT));
+        await this.ngOnInit();
     }
 
     async subscribeAsConsumer(): Promise<void> {
-        return this.distributorContractService.subscribeAsConsumer();
+        await this.distributorContractService.subscribeAsConsumer();
+        await this.ngOnInit();
     }
 
     async claimTokensAsConsumer(): Promise<void> {
-        return this.distributorContractService.claimTokensAsConsumer();
+        await this.distributorContractService.claimTokensAsConsumer();
+        await this.ngOnInit();
     }
 }

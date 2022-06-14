@@ -148,8 +148,8 @@ export class Web3Service {
         this.productionMeter = new this.web3!.eth.Contract(Constants.ProductionMeterAbi, Constants.productionMeterAddress, { from: defaultAccount });
 
         this.reloadPageOnEvent(this.distributor, 'StateTransitioned');
-        this.reloadPageOnEvent(this.distributor, 'TokensProduced');
-        this.reloadPageOnEvent(this.distributor, 'TokensConsumed');
+        this.reloadPageOnEvent(this.distributor, 'TokensProduced'); // if current page is consumer
+        //this.reloadPageOnEvent(this.distributor, 'TokensConsumed'); // remove this?
     }
 
     private reloadPageOnEvent(contract: Contract, event: string) {
