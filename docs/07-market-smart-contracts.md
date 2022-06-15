@@ -1,6 +1,7 @@
 ## 07. Market smart contracts
 
-Following smart contracts are part of the HydroBlox project and are an implementation of a basic market mechanism. The contracts were written in Solidity.
+Following smart contracts are an implementation of a basic market mechanism. The contracts were written in Solidity. 
+In the end these contracts were not put into production due to a different trading setup that was envisaged. 
 
 ### SimpleMarket
 
