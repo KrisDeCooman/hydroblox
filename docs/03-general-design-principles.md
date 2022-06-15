@@ -13,7 +13,7 @@ We decided to create a separate contract for the business logic and the actual d
 This limitation was not always easy and required a bit of creativity sometimes. For example, one of the functionalities is that we calculate how many tokens each consumer can claim during a subscription period while making sure that they don't claim more tokens than their "fair share", without updating this every time for every consumer individually when new tokens are minted.
 
 ### Economic value
-The blockchain solution we developed should make economic sense, keeping mind the Tokenomics as described in 02. HydroBlox Solution , but in general it should try to solve the 3 current problems we see with the current water management policy as stated in Analysis section.
+The blockchain solution we developed should make economic sense, also keeping mind the Tokenomics as described in 02. HydroBlox Solution , but in general it should try to solve the 3 current problems we see with the current water management policy as stated in 01. Problem statement.
 
 1. Our solution is decentralized and allows that minted tokens, which will depend on the amount of rain being captured in the reservoirs, gets divided in a fair way to subscribed consumers. Consumers can then use these tokens as they wish, no prohibitions required.
   
