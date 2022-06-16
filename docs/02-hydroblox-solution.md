@@ -26,14 +26,16 @@ Once the consumer has approved the consumption meter to spend ether on his behal
 
 ### HydroBlox Tokenomics
 
-The HydroBlox tokens are transferrable, In combination with smart contracts running on a blockchain this allows to create the right economics to achieve multiple goals. The system has a number of objectives in mind:
+The HydroBlox tokens are transferable, in combination with smart contracts running on a blockchain this allows to create the right economics to achieve multiple goals. The system has a number of objectives in mind:
 1. In times of scarcity, i.e. droughts, the tokens should get more costly. This is to create the correct economic incentives for consumers, a large consumer will see that his behaviour comes at a cost
 2. The smart contracts should prevent speculative behaviour and unnecessary hoarding of tokens, this to avoid price fluctuations which will increase trust
 3. Ensure basic access to water needs to be guaranteed
 
 #### Solution
 
-We came up with a solution which tries to meet the above objectives. When a consumption meter has an oversupply of HBT, it will automatically offer a part of these tokens for sale but based on the consumer's past usage, it would still conserve enough tokens to cover its own demand such that not all tokens can be bought by someone else. On the other hand, the consumption meter will also automatically buy tokens when it is running out of HBT. The price of an HBT token will be determined based on an fixed algorithm, known in advance, that takes the total water supply into account. The less water supply there is, the higher the price of the HBT token will be.
+We came up with a solution which tries to meet the above objectives. At the start of Hydroblox a liquidiy pool wil be created where HBT and another native token is deposited. When a consumption meter has an oversupply of HBT, it will automatically sent a part of these tokens to the pool but based on the consumer's past usage, it would still conserve enough tokens to cover its own demand for a certain period.
+
+On the other hand, the consumption meter will also automatically buy tokens when it is running out of HBT. The price of an HBT token will be determined based on an fixed algorithm, known in advance, that takes the total water supply into account. The less water supply there is, the higher the price of the HBT token will be.
 
 Please note that no HBT can be bought manualy, this in order to prevent any speculation.
 
@@ -42,11 +44,14 @@ The mechanism described above can be compared with the functionalty of a liquidi
 The formalized version of the algorithm could look as follows:
 
 The price 1 HBT will be a function of the the total aggregated oversupply of HBT.
-![image](https://user-images.githubusercontent.com/25088136/173746398-b5479383-abe5-48d8-b4b2-c1a3650bbd10.png)
+
+![image](https://user-images.githubusercontent.com/25088136/174144408-d8fafdb2-862a-4da6-9e16-0c9e0eabe834.png)
 
  
 The oversupply of HBT for each consumer at a time T can be defined as as having more tokens then needed to cover X amount time of water usage, based on an average of the usage in the past.
 
-![image](https://user-images.githubusercontent.com/25088136/173758017-93d11c75-b342-4e2c-a00c-f2d9d923788d.png)
+![image](https://user-images.githubusercontent.com/25088136/174144348-91493f54-bb6a-4a33-aca3-95a4ddb3bc97.png)
+
+
 
 In the above example the predicted water usage for X amount of time for consumer C at time T will be 4000 HBT. If Consumer C would have more then 4000 HBT then these can be sold at a price determined by the algorithm above based on the total oversupply of HBT
