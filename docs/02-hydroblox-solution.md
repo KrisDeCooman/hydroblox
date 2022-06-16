@@ -50,7 +50,7 @@ This formula gives us the price of a HBT:   1 HBT= $\frac{K}{1nativeToken}$
 
 
 
-![image](https://user-images.githubusercontent.com/25088136/174144408-d8fafdb2-862a-4da6-9e16-0c9e0eabe834.png)
+![image](https://user-images.githubusercontent.com/25088136/174149927-fb7f8064-5611-4f0a-9ff8-45a9acb50dd5.png)
 
  
 The oversupply of HBT for each consumer at a time T can be defined as as having more tokens then needed to cover X amount time of water usage, based on an average of the usage in the past.
