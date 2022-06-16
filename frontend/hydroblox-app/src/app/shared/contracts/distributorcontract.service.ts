@@ -57,7 +57,8 @@ export class DistributorContractService extends BaseContractService {
 
   async subscribeAsConsumer(): Promise<void> {
     var contract = this.web3Service.getDistributorContract();
-    await super.send<void>(contract, 'subscribeAsConsumer', 1000000000);
+    const oneEther = 1000000000000000000;
+    await super.send<void>(contract, 'subscribeAsConsumer', oneEther);
   }
 
   async claimTokensAsConsumer(): Promise<void> {

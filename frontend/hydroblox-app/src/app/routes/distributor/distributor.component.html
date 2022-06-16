@@ -11,11 +11,12 @@
       }}</span>
   </mat-grid-tile>
   <mat-grid-tile>
-    <span>HBT tokens to claim in current run: {{ tokensToDivide }} --- Amount of subscribed consumers: {{
-      amountOfConsumers }}</span>
+    <span>HBT tokens to claim in current run: {{ tokensToDivide }} --- Number of subscribed consumers: {{
+      numberOfConsumers }}</span>
   </mat-grid-tile>
   <mat-grid-tile>
-    <span>Native tokens to claim in current run: {{ etherToDivide }}</span>
+    <span>Native tokens to claim in current run: {{ etherToDivide }} --- Number of subscribed producers: {{
+      numberOfProducers }}</span>
   </mat-grid-tile>
   <mat-grid-tile>
     <button mat-raised-button color=primary (click)="onTransitionClicked()">

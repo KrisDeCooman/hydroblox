@@ -1,1 +1,0 @@
-## 06. HydroBlox demo scenario
