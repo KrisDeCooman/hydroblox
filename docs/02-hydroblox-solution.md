@@ -35,15 +35,17 @@ The HydroBlox tokens are transferable, in combination with smart contracts runni
 
 We came up with a solution which tries to meet the above objectives. At the start of Hydroblox a liquidiy pool wil be created where HBT and another native token is deposited. When a consumption meter has an oversupply of HBT, it will automatically sent a part of these tokens to the pool but based on the consumer's past usage, it would still conserve enough tokens to cover its own demand for a certain period.
 
-On the other hand, the consumption meter will also automatically buy tokens when it is running out of HBT. The price of an HBT token will be determined based on an fixed algorithm, known in advance, that takes the total water supply into account. The less water supply there is, the higher the price of the HBT token will be.
+On the other hand, the consumption meter will also automatically buy HBT from the pool when it is running out of HBT. The price of an HBT token will be determined based by an automated market maker which is essentially an algorithm which is based on the ratio of HBT to the native token in the pool.
 
-Please note that no HBT can be bought manualy, this in order to prevent any speculation.
 
-The mechanism described above can be compared with the functionalty of a liquidity pool. The consumers with an oversupply provide liquidity, making sure no one runs out of water. But this comes with a price: the price of the HBT token is based on a fixed algorithm, which increases the price when the total supply decreases. Note that theoretically there could be no HBT being offered for sale but the increase in price, which is inverse to the amount of oversupply, will ensure that large consumer are encourged to consume less water as the price will become  veryhigh bringing demand down and small/normal consumers are encourged to be extra frugal because of the high price, bringing new HBT "to the market".
+If the price of HBT increased that ensure that large consumer  will tend to consume less water as it becomes costly to buy HBT, bringing demand down. On the other hand consumers are encourged to be extra frugal as they will reveice a high price if they would have an oversupplly of HBT, bringing new HBT into the pool which drives the prices down again. This will bring a new market equilibrium based on the law of supply and demand.
+ 
+Our solution differs from a normal liquidity pool in the sense that no tokens can be bought or sold manualy and that there is cap on the amount of tokens one can have.
+This in order to prevent speculation and ensure that no hoarding of HBT can take place
 
-The formalized version of the algorithm could look as follows:
+A formalized version of the automated market maker could look as follows:
 
-The price 1 HBT will be a function of the the total aggregated oversupply of HBT.
+
 
 ![image](https://user-images.githubusercontent.com/25088136/174144408-d8fafdb2-862a-4da6-9e16-0c9e0eabe834.png)
 
@@ -54,4 +56,4 @@ The oversupply of HBT for each consumer at a time T can be defined as as having 
 
 
 
-In the above example the predicted water usage for X amount of time for consumer C at time T will be 4000 HBT. If Consumer C would have more then 4000 HBT then these can be sold at a price determined by the algorithm above based on the total oversupply of HBT
+In the above example the predicted water usage for X amount of time for consumer C at time T will be 4000 HBT. If Consumer C would have more then 4000 HBT then these will be sent to the pool. In exhange she/he will reveice back a certain amount native tokens determined by the automated market maker as decribed above.
