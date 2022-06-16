@@ -20,18 +20,22 @@ contract HydroBloxStorage is Ownable {
 
     uint public subscriptionRunId;
     uint public subscriptionPrice;
+    uint public totalTokensMinted;
     uint public tokensToDivide;
     uint public etherToDivide;
-    uint public amountOfConsumers;
+    uint public numberOfConsumers;
+    uint public numberOfProducers;
     mapping(address => Consumer) public consumers;
     mapping(address => Producer) public producers;
 
     constructor() {
         subscriptionRunId = 0;
-        subscriptionPrice = 1 gwei;
+        subscriptionPrice = 1 ether;
+        totalTokensMinted = 0;
         tokensToDivide = 0;
         etherToDivide = 0;
-        amountOfConsumers = 0;
+        numberOfConsumers = 0;
+        numberOfProducers = 0;
     }
 
     function isSubscribedConsumer(address consumerAddress) external view returns (bool) {
@@ -46,15 +50,17 @@ contract HydroBloxStorage is Ownable {
 
     function subscribeConsumer(address consumerAddress) external onlyOwner {
         consumers[consumerAddress] = Consumer(true, 0, subscriptionRunId);
-        amountOfConsumers += 1;
+        numberOfConsumers += 1;
     }
 
     function subscribeProducer(address producerAddress) external onlyOwner {
         producers[producerAddress] = Producer(true, 0, subscriptionRunId);
+        numberOfProducers += 1;
     }
 
     function updateOnTokensMinted(address producerAddress, uint tokensMinted) external onlyOwner {
         producers[producerAddress].tokensMinted += tokensMinted;
+        totalTokensMinted += tokensMinted;
         tokensToDivide += tokensMinted;
     }
 
@@ -68,9 +74,11 @@ contract HydroBloxStorage is Ownable {
 
     function updateOnSubscriptionEnrollment(uint orphanedTokens, uint orphanedEther) external onlyOwner {
         subscriptionRunId += 1;
+        totalTokensMinted = 0;
         tokensToDivide = orphanedTokens;
         etherToDivide = orphanedEther;
-        amountOfConsumers = 0;
+        numberOfConsumers = 0;
+        numberOfProducers = 0;
     }
 
     function updateOnSubscriptionFinished(uint _etherToDivide) external onlyOwner {

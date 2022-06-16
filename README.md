@@ -2,7 +2,7 @@
 
 The HydroBlox project was developed as part of the Blockchain@Home education at Howest.
 
-The hosted version can be found [here](https://ipfs.infura.io/ipfs/QmZtCFNxbDvh1FwGMsTck3CbvtD8VoCULX1DgpSjew3dPT).
+The hosted version can be found [here](https://ipfs.infura.io/ipfs/QmfYR8sNKMswfKeWGnYgYSXGWSwdkSmqr9GSqB23QKf6mC).
 
 ## Table of content
 - [01. Problem statement](docs/01-problem-statement.md)
@@ -10,10 +10,9 @@ The hosted version can be found [here](https://ipfs.infura.io/ipfs/QmZtCFNxbDvh1
 - [03. General design principles](docs/03-general-design-principles.md)
 - [04. HydroBlox smart contracts](docs/04-hydroblox-smart-contracts.md)
 - [05. HydroBlox example](docs/05-hydroblox-example.md)
-- [06. HydroBlox demo scenario](docs/06-hydroblox-demo-scenario.md)
-- [07. Market smart contracts](docs/07-market-smart-contracts.md)
-- [08. Market demo scenario](docs/08-market-demo-scenario.md)
-- [09. Implementation details](docs/09-implementation-details.md)
+- [06. Market smart contracts](docs/06-market-smart-contracts.md)
+- [07. Market demo scenario](docs/07-market-demo-scenario.md)
+- [08. Implementation details](docs/08-implementation-details.md)
 
 ## Authors
 

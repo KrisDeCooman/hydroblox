@@ -30,11 +30,10 @@ The HydroBlox tokens are transferrable, In combination with smart contracts runn
 1. In times of scarcity, i.e. droughts, the tokens should get more costly. This is to create the correct economic incentives for consumers, a large consumer will see that his behaviour comes at a cost
 2. The smart contracts should prevent speculative behaviour and unnecessary hoarding of tokens, this to avoid price fluctuations which will increase trust
 3. Ensure basic access to water needs to be guaranteed
-4. When returning to a situation where there's plenty of water, the available tokens for each consumer should return to a state where every consumer has an equivalent amount of tokens (weighted to the size of the household).
 
 #### Solution
 
-We came up with a solution which tries to meet the above objectives. When a consumption meter has an oversupply of HBT, it will automatically offer a part of these tokens for sale but based on the consumer's past usage, it would still conserve enough tokens to cover its own demand such that not all tokens can be bought by someone else. On the other hand, the consumption meter will also automatically buy tokens when it is running out og HBT. The price of an HBT token will be determined based on an fixed algorithm, known in advance, that takes the total water supply into account. The less water supply there is, the higher the price of the HBT token will be.
+We came up with a solution which tries to meet the above objectives. When a consumption meter has an oversupply of HBT, it will automatically offer a part of these tokens for sale but based on the consumer's past usage, it would still conserve enough tokens to cover its own demand such that not all tokens can be bought by someone else. On the other hand, the consumption meter will also automatically buy tokens when it is running out of HBT. The price of an HBT token will be determined based on an fixed algorithm, known in advance, that takes the total water supply into account. The less water supply there is, the higher the price of the HBT token will be.
 
 Please note that no HBT can be bought manualy, this in order to prevent any speculation.
 
@@ -51,8 +50,3 @@ The oversupply of HBT for each consumer at a time T can be defined as as having 
 ![image](https://user-images.githubusercontent.com/25088136/173758017-93d11c75-b342-4e2c-a00c-f2d9d923788d.png)
 
 In the above example the predicted water usage for X amount of time for consumer C at time T will be 4000 HBT. If Consumer C would have more then 4000 HBT then these can be sold at a price determined by the algorithm above based on the total oversupply of HBT
-
-
-
-
-

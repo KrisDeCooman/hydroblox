@@ -85,7 +85,7 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
     }
 
     function claimTokensAsConsumer() external checkSubscribedConsumer(true) isNotInState(SubscriptionStates.Enrollment) {
-        uint tokensToClaim = store.tokensToDivide() / store.amountOfConsumers(); // todo safemath?
+        uint tokensToClaim = store.tokensToDivide() / store.numberOfConsumers();
         (, uint tokensAlreadyClaimed,) = store.consumers(msg.sender);
         if (tokensToClaim > tokensAlreadyClaimed) {
             uint amount = tokensToClaim - tokensAlreadyClaimed;
@@ -97,7 +97,7 @@ contract HydroBloxDistributor is MultiOwnable, HydroBloxStateMachine {
 
     function claimEtherAsProducer() external checkSubscribedProducer(true) isInState(SubscriptionStates.Finished) {
         (, uint tokensMinted,) = store.producers(msg.sender);
-        uint amount = store.etherToDivide() * tokensMinted / store.tokensToDivide(); // todo safemath?
+        uint amount = store.etherToDivide() * tokensMinted / store.totalTokensMinted();
         if (amount > 0) {
             store.updateOnEtherClaimed(msg.sender);
             payable(msg.sender).transfer(amount);

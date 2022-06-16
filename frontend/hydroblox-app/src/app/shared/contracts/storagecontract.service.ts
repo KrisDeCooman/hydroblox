@@ -43,8 +43,13 @@ export class StorageContractService extends BaseContractService {
     return await super.call<number>(contract, 'etherToDivide');
   }
 
-  async amountOfConsumers(): Promise<number> {
+  async numberOfConsumers(): Promise<number> {
     var contract = this.web3Service.getStorageContract();
-    return await super.call<number>(contract, 'amountOfConsumers');
+    return await super.call<number>(contract, 'numberOfConsumers');
+  }
+
+  async numberOfProducers(): Promise<number> {
+    var contract = this.web3Service.getStorageContract();
+    return await super.call<number>(contract, 'numberOfProducers');
   }
 }
