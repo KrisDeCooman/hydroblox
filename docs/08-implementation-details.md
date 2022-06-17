@@ -6,7 +6,7 @@ Development of HydroBlox was done using Remix and Visual Studio Code.
 
 #### Frontend
 
-We tried to identify the best frontend framework to create our DApp in. But we came to the conclusion that there is no such framework and that most/all Javascript SPA framework can be used. We chose Angular since on of us already had some experience with it.
+We tried to identify the best frontend framework to create our DApp in. But we came to the conclusion that there is no such framework and that most/all Javascript SPA frameworks can be used. We chose Angular since on of us already had some experience with it.
 
 We invested time to improve the usability in the frontend and lower the chance on errors:
 - Show loader when calling/sending to smart contract
