@@ -33,7 +33,7 @@ The HydroBlox tokens are transferable, in combination with smart contracts runni
 
 #### Solution
 
-We came up with a solution which tries to meet the above objectives. At the start of Hydroblox a liquidiy pool wil be created where HBT and another native token e.g ETH is deposited. When a consumption meter has an oversupply of HBT, it will automatically sent a part of these tokens to the pool but based on the consumer's past usage, it would still conserve enough tokens to cover its own demand for a certain period. In exchange for sending HBT to the pool the consumer will get a certain amount of native token back from the pool. On the other hand, the consumption meter will also automatically buy HBT from the pool in exhange for the native token when it is running out of HBT.
+We came up with a solution which tries to meet the above objectives. At the start of Hydroblox a liquidity pool wil be created where HBT and another native token e.g ETH is deposited. When a consumption meter has an oversupply of HBT, it will automatically sent a part of these tokens to the pool but based on the consumer's past usage, it would still conserve enough tokens to cover its own demand for a certain period. In exchange for sending HBT to the pool the consumer will get a certain amount of native token back from the pool. On the other hand, the consumption meter will also automatically buy HBT from the pool in exhange for the native token when it is running out of HBT.
 
 The price of an HBT token will be determined by an automated market maker which is essentially an algorithm based on the ratio of HBT to the native token in the pool.
 
